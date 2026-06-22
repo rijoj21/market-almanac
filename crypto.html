@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Crypto Bench — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;--crypto:#5b53a0;--shadow:rgba(34,29,23,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1100px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover,nav.top-nav a.here{color:var(--rust);border-color:var(--rust)}
+  @media(max-width:820px){nav.top-nav a:not(.back){display:none}}
+
+  .hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:20px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.3rem,6vw,4.4rem);line-height:.98;letter-spacing:-.03em;margin-bottom:20px}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--crypto)}
+  .hero .lede{font-size:1.18rem;max-width:680px;color:var(--ink-soft)}
+  .hero .lede strong{color:var(--ink)}
+
+  .riskbox{margin:24px 0 0;border:1.5px solid var(--rust);background:#f7e9e2;border-radius:9px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start}
+  .riskbox .ri{font-size:1.3rem;line-height:1}
+  .riskbox p{font-size:.96rem;color:#7a3a22}
+  .riskbox b{color:var(--rust)}
+
+  .explain{padding:40px 0;border-bottom:1px solid var(--line)}
+  .explain h2{font-family:'Fraunces';font-weight:600;font-size:1.5rem;margin-bottom:10px}
+  .explain p{color:var(--ink-soft);max-width:720px;margin-bottom:12px}
+  .explain .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+  @media(max-width:760px){.explain .pillars{grid-template-columns:1fr}}
+  .pillar{border-left:3px solid var(--crypto);padding-left:14px}
+  .pillar .pt{font-family:'Fraunces';font-weight:600;font-size:1.05rem;margin-bottom:4px}
+  .pillar .pd{font-size:.92rem;color:var(--ink-soft)}
+
+  .cat{padding:44px 0 10px;border-bottom:1px solid var(--line)}
+  .cat-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+  .cat-head .dot{width:13px;height:13px;border-radius:50%;align-self:center}
+  .cat-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.7rem;letter-spacing:-.01em}
+  .cat .cat-sub{color:var(--ink-soft);margin-bottom:26px;font-size:1.05rem;max-width:660px}
+
+  .com-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:10px}
+  .com-card{border:1px solid var(--ink);border-radius:10px;padding:22px 22px 20px;background:#fffdf7;box-shadow:3px 4px 0 var(--shadow);display:flex;flex-direction:column;border-top:6px solid var(--accent);text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s}
+  .com-card:hover{transform:translateY(-4px);box-shadow:5px 8px 0 var(--shadow)}
+  .com-card:hover .glink{background:var(--ink)}
+  .com-card .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .com-card .nm{display:flex;align-items:center;gap:10px}
+  .com-card .nm .ic{font-size:1.5rem;font-weight:700;width:30px;text-align:center;color:var(--accent)}
+  .com-card .nm h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;letter-spacing:-.01em;line-height:1.05}
+  .com-card .price{text-align:right;flex:0 0 auto}
+  .com-card .price .p{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;color:var(--accent);line-height:1}
+  .com-card .price .u{font-family:'Spline Sans Mono',monospace;font-size:.56rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:3px}
+  .com-card p{color:var(--ink-soft);font-size:.95rem;margin-bottom:16px;flex:1}
+  .com-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:13px}
+  .com-card .etf{font-family:'Spline Sans Mono',monospace;font-size:.62rem;color:var(--ink-soft);letter-spacing:.03em}
+  .com-card .etf b{color:var(--ink)}
+  .com-card .glink{font-family:'Spline Sans Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:#fff;background:var(--accent);padding:8px 12px;border-radius:5px;transition:.16s;white-space:nowrap}
+  .com-card .glink:hover{background:var(--ink)}
+
+  footer{padding:48px 0 64px;text-align:center}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:580px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:20px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · CRYPTO IS HIGH-RISK &amp; CAN LOSE ALL VALUE · PRICES ARE DATED SNAPSHOTS, NOT LIVE DATA</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">CRYPTO</span></a>
+    <nav class="top-nav">
+      <a href="index.html" class="back">← Almanac</a>
+      <a href="companies.html">Companies &amp; ETFs</a>
+      <a href="commodities.html">Commodities</a>
+      <a href="crypto.html" class="here">Crypto</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Plate V · The newest, wildest corner of the markets</div>
+    <h1>Cryptocurrency — money<br>made of <em>code</em>.</h1>
+    <p class="lede">Crypto assets live on <strong>blockchains</strong> — shared public ledgers no single company controls. Unlike a stock, most have no business or profit behind them; their price comes purely from supply, demand and belief. That makes them fascinating to learn about — and extraordinarily risky.</p>
+    <div class="riskbox">
+      <span class="ri">⚠️</span>
+      <p><b>Understand the risk:</b> crypto prices can double or halve in weeks, and coins can fall to zero. The market is down sharply so far in 2026. Never invest money you can't afford to lose — this page is for <b>learning the vocabulary only</b>, not a suggestion to buy anything.</p>
+    </div>
+  </div>
+</div>
+
+<section class="explain">
+  <div class="wrap">
+    <h2 class="reveal">How crypto differs from stocks</h2>
+    <p class="reveal">A share is a piece of a company that can earn money and pay dividends. Most crypto tokens represent a <b>network or an idea</b> instead — there's no profit underneath, so the only return is a change in price. Some coins aim to be money (Bitcoin), some are platforms for apps (Ethereum), and some simply track the dollar (stablecoins). Knowing which is which is the whole first lesson.</p>
+    <div class="pillars">
+      <div class="pillar reveal"><div class="pt">Usually no company</div><div class="pd">Most tokens are a network or community, not a business with earnings.</div></div>
+      <div class="pillar reveal"><div class="pt">Extremely volatile</div><div class="pd">Double-digit moves in a day are normal; total loss is genuinely possible.</div></div>
+      <div class="pillar reveal"><div class="pt">Always on</div><div class="pd">Crypto trades 24/7 worldwide — no opening bell, no closing bell.</div></div>
+    </div>
+  </div>
+</section>
+
+<div id="cats"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains what crypto assets are — it does not recommend any of them, manage money, or place trades. Crypto is volatile and largely unregulated; treat it with extra caution.</p>
+    <p>Explore more: <a href="commodities.html">Commodities</a> · <a href="companies.html">Companies &amp; ETFs</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · PRICES APPROXIMATE &amp; DATED · NEVER INVEST MORE THAN YOU CAN AFFORD TO LOSE</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const G=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+const CATS=[
+  {name:"The foundations",accent:"#5b53a0",
+   sub:"The two coins everything else is measured against — by far the largest and most established.",
+   items:[
+     {id:"btc",ic:"₿",name:"Bitcoin",sym:"BTC",price:"≈ $63,000",etf:"IBIT · FBTC",gq:"Bitcoin price",
+      desc:"The first and largest cryptocurrency — a decentralised digital money with a hard cap of 21 million coins. Often called 'digital gold' and held as a store of value."},
+     {id:"eth",ic:"Ξ",name:"Ethereum",sym:"ETH",price:"≈ $1,700",etf:"ETHA",gq:"Ethereum price",
+      desc:"A programmable blockchain that runs 'smart contracts' — self-executing code. It powers most of decentralised finance and NFTs; ETH is the fuel that pays for it."}
+   ]},
+  {name:"Smart-contract platforms",accent:"#2a8a9c",
+   sub:"Networks competing to host apps, trading and tokens — the 'Layer 1' blockchains beyond Ethereum.",
+   items:[
+     {id:"bnb",ic:"🔶",name:"BNB",sym:"BNB",price:"≈ $610",gq:"BNB coin price",
+      desc:"The token of the Binance exchange and its BNB Chain, used to pay fees and power apps in that ecosystem."},
+     {id:"sol",ic:"🟣",name:"Solana",sym:"SOL",price:"≈ $70",gq:"Solana price",
+      desc:"A fast, very low-cost blockchain built for apps and trading. Marketed as an 'Ethereum competitor' and known for speed."},
+     {id:"xrp",ic:"💧",name:"XRP",sym:"XRP",price:"≈ $1.13",gq:"XRP price",
+      desc:"Built by Ripple to move money across borders quickly and cheaply between banks and payment firms."},
+     {id:"ada",ic:"🔵",name:"Cardano",sym:"ADA",price:"≈ $0.45",gq:"Cardano ADA price",
+      desc:"A smart-contract blockchain known for its slow, research-and-peer-review-driven approach to building."},
+     {id:"avax",ic:"🔺",name:"Avalanche",sym:"AVAX",price:"≈ $18",gq:"Avalanche AVAX price",
+      desc:"A fast smart-contract platform that lets projects launch their own custom blockchains, called 'subnets'."},
+     {id:"trx",ic:"⚡",name:"Tron",sym:"TRX",price:"≈ $0.32",gq:"Tron TRX price",
+      desc:"A blockchain focused on content and entertainment that carries a huge share of the world's stablecoin transfers."}
+   ]},
+  {name:"Stablecoins",accent:"#3f8a5f",
+   sub:"Coins designed to hold a steady $1 — the cash-like layer people use to move value around crypto.",
+   items:[
+     {id:"usdt",ic:"💵",name:"Tether",sym:"USDT",price:"≈ $1.00",gq:"Tether USDT price",
+      desc:"A 'stablecoin' designed to stay at one dollar, backed by reserves. The most-traded crypto, used to park or shuttle money between coins."},
+     {id:"usdc",ic:"💲",name:"USD Coin",sym:"USDC",price:"≈ $1.00",gq:"USD Coin USDC price",
+      desc:"A regulated dollar-pegged stablecoin run by Circle, widely used in trading and payments."}
+   ]},
+  {name:"Meme &amp; community coins",accent:"#b0508a",
+   sub:"Coins driven by internet culture and enthusiasm rather than a technical roadmap — and especially speculative.",
+   items:[
+     {id:"doge",ic:"🐕",name:"Dogecoin",sym:"DOGE",price:"≈ $0.13",gq:"Dogecoin price",
+      desc:"Started in 2013 as a joke based on a dog meme. It has no supply cap and runs on community spirit rather than a grand plan — a textbook example of a highly speculative coin."}
+   ]}
+];
+
+document.getElementById('cats').innerHTML=CATS.map(c=>`
+  <section class="cat">
+    <div class="wrap">
+      <div class="cat-head reveal"><span class="dot" style="background:${c.accent}"></span><h2>${c.name}</h2></div>
+      <p class="cat-sub reveal">${c.sub}</p>
+      <div class="com-grid">
+        ${c.items.map(it=>`
+          <a class="com-card reveal" href="crypto-detail.html?id=${it.id}" style="--accent:${c.accent}">
+            <div class="row1">
+              <div class="nm"><span class="ic">${it.ic}</span><h3>${it.name}</h3></div>
+              <div class="price"><div class="p">${it.price}</div><div class="u">per coin</div></div>
+            </div>
+            <p>${it.desc}</p>
+            <div class="foot">
+              <span class="etf">${it.sym}${it.etf?' · ETF '+it.etf:''}</span>
+              <span class="glink">View details ↗</span>
+            </div>
+          </a>`).join('')}
+      </div>
+    </div>
+  </section>`).join('');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23221d17'/%3E%3Cpath d='M6 22 L13 14 L19 18 L26 8' fill='none' stroke='%23c89a3c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>The Trading Floor — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;--gold:#c89a3c;--rust:#b5532e;--accent:#2f6f5f;--up:#3f8a5f;--down:#c0463a;--shadow:rgba(34,29,23,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1040px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover,nav.top-nav a.here{color:var(--rust);border-color:var(--rust)}
+  @media(max-width:820px){nav.top-nav a:not(.back){display:none}}
+
+  .hero{padding:54px 0 38px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:20px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.3rem,6vw,4.2rem);line-height:.98;letter-spacing:-.03em;margin-bottom:20px}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .hero .lede{font-size:1.18rem;max-width:680px;color:var(--ink-soft)}
+  .hero .lede strong{color:var(--ink)}
+  .riskbox{margin:26px 0 0;border:1.5px solid var(--rust);background:#f7e9e2;border-radius:9px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start}
+  .riskbox .ri{font-size:1.3rem;line-height:1}
+  .riskbox p{font-size:.97rem;color:#7a3a22}
+  .riskbox b{color:var(--rust)}
+
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.13em;color:var(--rust);margin-bottom:8px}
+  section h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.7rem;letter-spacing:-.01em;margin-bottom:14px}
+  section h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin:22px 0 8px}
+  section p{color:var(--ink-soft);max-width:760px;margin-bottom:14px}
+  section p strong{color:var(--ink)}
+
+  .diagram{border:1px solid var(--line);border-radius:11px;background:#fffdf7;box-shadow:3px 4px 0 var(--shadow);padding:22px;margin:18px 0}
+  .diagram svg{width:100%;height:auto;display:block}
+  .diagram .cap{font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.04em;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6}
+  .svg-lab{font-family:'Spline Sans Mono',monospace;font-size:10px;fill:var(--ink-soft);letter-spacing:.02em}
+  .svg-lab.b{fill:var(--ink);font-weight:500}
+  .svg-axis{stroke:var(--line);stroke-width:1.5}
+  .svg-lead{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:2 2}
+
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+  @media(max-width:680px){.trio{grid-template-columns:1fr}}
+  .trio .diagram{margin:0}
+
+  .strat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:8px}
+  .strat{border:1px solid var(--ink);border-radius:10px;background:#fffdf7;padding:20px;box-shadow:3px 4px 0 var(--shadow);border-top:6px solid var(--accent)}
+  .strat .hz{font-family:'Spline Sans Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:#fff;background:var(--accent);display:inline-block;padding:3px 9px;border-radius:20px;margin-bottom:10px}
+  .strat h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;margin:0 0 8px}
+  .strat p{font-size:.94rem;margin-bottom:10px;color:var(--ink-soft)}
+  .strat .risk{font-size:.86rem;color:#7a3a22;border-top:1px dotted var(--line);padding-top:9px}
+  .strat .risk b{color:var(--down)}
+
+  .terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:10px}
+  .term{border:1px solid var(--line);border-radius:9px;background:#fffdf7;padding:15px 17px}
+  .term h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;margin-bottom:4px}
+  .term p{font-size:.9rem;color:var(--ink-soft);margin:0}
+
+  .factors{list-style:none;display:flex;flex-direction:column;max-width:780px;margin-top:6px}
+  .factors li{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .factors li:last-child{border-bottom:none}
+  .factors li .n{font-family:'Spline Sans Mono',monospace;font-size:.72rem;color:var(--down);padding-top:3px;flex:0 0 auto}
+  .factors li .t{font-size:1rem;color:var(--ink-soft)}
+  .factors li .t b{color:var(--ink)}
+
+  .truth{background:var(--ink);color:var(--paper);border-radius:11px;padding:26px 28px;box-shadow:5px 6px 0 var(--shadow);margin:6px 0 4px}
+  .truth .tag{font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .truth p{color:#e7dcc6;max-width:none;margin:10px 0 0;font-size:1.05rem}
+  .truth p b{color:#fff}
+
+  .glink{display:inline-flex;align-items:center;gap:10px;font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;background:var(--accent);color:#fff;text-decoration:none;padding:14px 24px;border-radius:7px;transition:.18s}
+  .case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:16px}
+  .case{display:flex;flex-direction:column;gap:5px;border:1px solid var(--line);border-radius:10px;background:#fffdf7;padding:18px 20px;box-shadow:2px 3px 0 var(--shadow);text-decoration:none;color:inherit;border-left:5px solid var(--accent);transition:transform .16s,box-shadow .16s}
+  .case:hover{transform:translateY(-3px);box-shadow:4px 7px 0 var(--shadow)}
+  .case .ct{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;color:var(--ink)}
+  .case .cd{font-size:.9rem;color:var(--ink-soft)}
+  .case .cg{font-family:'Spline Sans Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-top:3px}
+  .glink:hover{background:var(--ink)}
+  .backbar{padding:24px 0 0}
+  .backbar a{font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none}
+  .backbar a:hover{color:var(--rust)}
+
+  footer{padding:44px 0 62px;text-align:center}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:560px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:20px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · TRADING IS HIGH-RISK · MOST ACTIVE RETAIL TRADERS LOSE MONEY</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="market-almanac.html" class="brand">The Market Almanac<span class="mark">TRADING</span></a>
+    <nav class="top-nav">
+      <a href="market-almanac.html" class="back">← Almanac</a>
+      <a href="companies.html">Companies</a>
+      <a href="commodities.html">Commodities</a>
+      <a href="crypto.html">Crypto</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Plate VI · The fast lane of the markets</div>
+    <h1>Trading — reading<br>the market's <em>pulse</em>.</h1>
+    <p class="lede"><strong>Investing is the slow lane; trading is the fast one.</strong> Where an investor plants money and waits years, a trader buys and sells over months, days, or even seconds, trying to profit from price moves. It has its own charts, its own vocabulary, and its own very real dangers.</p>
+    <div class="riskbox">
+      <span class="ri">⚠️</span>
+      <p><b>Read this first:</b> trading is genuinely hard and high-risk. Study after study finds that the <b>majority of active retail traders lose money</b> over time, and brokers in many countries are legally required to warn that most accounts lose on leveraged products. This page explains how trading <b>works</b> so you understand it — it is not a suggestion to do it, and nothing here is advice or a strategy to follow.</p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">The idea</div>
+    <h2 class="reveal">What is trading?</h2>
+    <p class="reveal"><strong>Trading is buying and selling assets to profit from short-term price changes.</strong> A trader doesn't necessarily care whether a company is great for the next decade — they care whether its price will move in the next hour, day or week. The same shares, currencies, commodities or coins can be both <em>invested in</em> and <em>traded</em>; the difference is the clock and the intent.</p>
+    <p class="reveal">Investors ask, "Is this a good business to own for years?" Traders ask, "Which way will the price move next, and how do I manage the risk if I'm wrong?" Most traders lean on <strong>charts</strong> — the visual history of a price — to spot patterns, rather than studying company fundamentals. That whole approach is called <em>technical analysis</em>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">Reading a chart</div>
+    <h2 class="reveal">The candlestick, decoded</h2>
+    <p class="reveal">Most price charts are built from <strong>candlesticks</strong>. Each candle sums up one slice of time (a minute, an hour, a day) into four numbers — the <b>open</b>, <b>high</b>, <b>low</b> and <b>close</b> — and its colour tells you, at a glance, whether the price rose or fell.</p>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 520 280" role="img" aria-label="Anatomy of a candlestick">
+        <!-- BULLISH candle -->
+        <line x1="150" y1="34" x2="150" y2="248" class="svg-axis" stroke="#221d17" stroke-width="2"/>
+        <rect x="128" y="92" width="44" height="108" fill="var(--up)" stroke="#221d17" stroke-width="2"/>
+        <!-- leader lines + labels -->
+        <line x1="150" y1="34" x2="250" y2="34" class="svg-lead"/><text x="256" y="38" class="svg-lab b">High — the peak reached</text>
+        <line x1="172" y1="92" x2="250" y2="92" class="svg-lead"/><text x="256" y="96" class="svg-lab b">Close — where it ended (top, here)</text>
+        <line x1="172" y1="200" x2="250" y2="200" class="svg-lead"/><text x="256" y="204" class="svg-lab b">Open — where it began</text>
+        <line x1="150" y1="248" x2="250" y2="248" class="svg-lead"/><text x="256" y="252" class="svg-lab b">Low — the bottom reached</text>
+        <text x="74" y="150" class="svg-lab">body</text>
+        <line x1="100" y1="146" x2="126" y2="146" class="svg-lead"/>
+        <text x="60" y="60" class="svg-lab">wick</text>
+        <line x1="84" y1="56" x2="148" y2="56" class="svg-lead"/>
+        <text x="100" y="272" class="svg-lab b" fill="var(--up)">▲ BULLISH · green · close above open</text>
+        <!-- BEARISH candle -->
+        <line x1="430" y1="50" x2="430" y2="250" class="svg-axis" stroke="#221d17" stroke-width="2"/>
+        <rect x="408" y="92" width="44" height="100" fill="var(--down)" stroke="#221d17" stroke-width="2"/>
+        <text x="376" y="84" class="svg-lab">open ▲</text>
+        <text x="376" y="208" class="svg-lab">close ▼</text>
+        <text x="372" y="272" class="svg-lab b" fill="var(--down)">▼ BEARISH · red · close below open</text>
+      </svg>
+      <div class="cap">One candle = one period. The thick "body" spans open-to-close; the thin "wicks" mark the highest and lowest prices touched.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">The vocabulary, drawn</div>
+    <h2 class="reveal">Patterns traders watch for</h2>
+    <p class="reveal">A handful of ideas come up again and again. None of them predict the future — they're just a shared language for describing what a price is doing.</p>
+
+    <h3 class="reveal">Trend — which way is it leaning?</h3>
+    <div class="trio">
+      <div class="diagram reveal">
+        <svg viewBox="0 0 200 130" role="img" aria-label="Uptrend">
+          <polyline points="15,110 55,95 90,100 130,70 170,45" fill="none" stroke="var(--up)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M170 45 l-12 2 l6 -10 z" fill="var(--up)"/>
+          <text x="15" y="20" class="svg-lab b" fill="var(--up)">UPTREND</text>
+          <text x="15" y="124" class="svg-lab">higher highs &amp; lows</text>
+        </svg>
+      </div>
+      <div class="diagram reveal">
+        <svg viewBox="0 0 200 130" role="img" aria-label="Downtrend">
+          <polyline points="15,30 55,50 90,45 130,75 170,100" fill="none" stroke="var(--down)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M170 100 l-2 -12 l-10 6 z" fill="var(--down)"/>
+          <text x="15" y="20" class="svg-lab b" fill="var(--down)">DOWNTREND</text>
+          <text x="15" y="124" class="svg-lab">lower highs &amp; lows</text>
+        </svg>
+      </div>
+      <div class="diagram reveal">
+        <svg viewBox="0 0 200 130" role="img" aria-label="Sideways">
+          <polyline points="15,70 50,55 85,80 120,55 155,80 185,65" fill="none" stroke="var(--ink-soft)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="15" y="20" class="svg-lab b">SIDEWAYS</text>
+          <text x="15" y="124" class="svg-lab">range-bound, no clear way</text>
+        </svg>
+      </div>
+    </div>
+
+    <h3 class="reveal">Support &amp; resistance — the floor and ceiling</h3>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 520 230" role="img" aria-label="Support and resistance">
+        <line x1="30" y1="55" x2="490" y2="55" stroke="var(--down)" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="30" y="46" class="svg-lab b" fill="var(--down)">RESISTANCE — a ceiling sellers defend</text>
+        <line x1="30" y1="180" x2="490" y2="180" stroke="var(--up)" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="30" y="200" class="svg-lab b" fill="var(--up)">SUPPORT — a floor buyers defend</text>
+        <polyline points="30,170 90,60 150,165 210,58 270,172 330,62 390,168 450,90" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+      <div class="cap">Prices often stall and bounce at the same levels. Break cleanly through one and traders watch for the move to continue.</div>
+    </div>
+
+    <div class="terms">
+      <div class="term reveal"><h4>Bid / Ask</h4><p>The bid is the most a buyer will pay; the ask is the least a seller will take. The gap is the <b>spread</b> — a hidden cost on every trade.</p></div>
+      <div class="term reveal"><h4>Volume</h4><p>How many units changed hands. A big move on high volume is taken more seriously than one on thin volume.</p></div>
+      <div class="term reveal"><h4>Liquidity</h4><p>How easily you can buy or sell without moving the price. Thin, illiquid markets are dangerous to trade.</p></div>
+      <div class="term reveal"><h4>Moving Average</h4><p>The average price over the last N periods, drawn as a smooth line to reveal the underlying direction through the noise.</p></div>
+      <div class="term reveal"><h4>Breakout</h4><p>When price pushes decisively past a support or resistance level — often where traders expect a bigger move.</p></div>
+      <div class="term reveal"><h4>Leverage</h4><p>Borrowing to trade a bigger position than your cash allows. It magnifies gains <b>and</b> losses — the fastest way to blow up an account.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">Managing the downside</div>
+    <h2 class="reveal">Risk tools: stop-loss &amp; take-profit</h2>
+    <p class="reveal">Serious traders obsess over <strong>risk management</strong>, not profits. Before entering, they decide where they'll get out if wrong (a <b>stop-loss</b>) and where they'll take gains (a <b>take-profit</b>). Comparing the two gives a <b>risk-to-reward ratio</b> — a way to size whether a trade is even worth taking.</p>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 520 240" role="img" aria-label="Risk and reward">
+        <rect x="150" y="40" width="220" height="70" fill="#e3efe6" stroke="var(--up)" stroke-width="1.5"/>
+        <rect x="150" y="150" width="220" height="48" fill="#f4e2dd" stroke="var(--down)" stroke-width="1.5"/>
+        <line x1="120" y1="130" x2="400" y2="130" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="404" y="134" class="svg-lab b">Entry — you buy here</text>
+        <line x1="120" y1="40" x2="400" y2="40" stroke="var(--up)" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="404" y="44" class="svg-lab b" fill="var(--up)">Take-profit — target</text>
+        <line x1="120" y1="198" x2="400" y2="198" stroke="var(--down)" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="404" y="202" class="svg-lab b" fill="var(--down)">Stop-loss — bail out</text>
+        <text x="60" y="79" class="svg-lab b" fill="var(--up)">REWARD</text>
+        <text x="60" y="178" class="svg-lab b" fill="var(--down)">RISK</text>
+        <text x="158" y="226" class="svg-lab">Here reward is bigger than risk — a 2:1 ratio. Many traders won't take a trade below 1:1.</text>
+      </svg>
+      <div class="cap">A stop-loss caps how much you can lose; position sizing keeps any single trade from sinking the account.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">Approaches</div>
+    <h2 class="reveal">Common trading styles</h2>
+    <p class="reveal">Traders are mostly sorted by their <strong>time horizon</strong> — how long they hold a position. Faster styles mean more trades, more costs, more stress, and more chances to be wrong. These are descriptions, not recommendations.</p>
+    <div class="strat-grid">
+      <div class="strat reveal">
+        <span class="hz">Seconds–minutes</span>
+        <h3>Scalping</h3>
+        <p>Dozens or hundreds of tiny trades a day, each chasing a sliver of profit. Demands intense focus, speed and very low fees.</p>
+        <div class="risk"><b>Risk:</b> costs and small mistakes pile up fast; brutal mentally.</div>
+      </div>
+      <div class="strat reveal">
+        <span class="hz">Within one day</span>
+        <h3>Day Trading</h3>
+        <p>Opening and closing all positions the same day, never holding overnight. A full-time job that lives on charts and news.</p>
+        <div class="risk"><b>Risk:</b> the style where the most beginners lose money.</div>
+      </div>
+      <div class="strat reveal">
+        <span class="hz">Days–weeks</span>
+        <h3>Swing Trading</h3>
+        <p>Holding for a few days to weeks to catch a single "swing" in price. Slower-paced, so it suits people with day jobs.</p>
+        <div class="risk"><b>Risk:</b> overnight news can gap the price against you.</div>
+      </div>
+      <div class="strat reveal">
+        <span class="hz">Weeks–months</span>
+        <h3>Trend Following</h3>
+        <p>Spotting a clear up- or down-trend and riding it until it bends, rather than predicting tops and bottoms.</p>
+        <div class="risk"><b>Risk:</b> whipsaws in sideways markets cause repeated small losses.</div>
+      </div>
+      <div class="strat reveal">
+        <span class="hz">Months–years</span>
+        <h3>Position Trading</h3>
+        <p>The slowest trading style — holding for months on a big-picture view. It starts to blur into long-term investing.</p>
+        <div class="risk"><b>Risk:</b> a long wrong call ties up money and conviction.</div>
+      </div>
+      <div class="strat reveal" style="border-top-color:var(--gold)">
+        <span class="hz" style="background:var(--gold);color:var(--ink)">Years+</span>
+        <h3>…vs. Investing</h3>
+        <p>For contrast: buy good assets and hold for years, ignoring the noise. Lower stress, lower costs, and historically kinder to most people.</p>
+        <div class="risk" style="color:var(--ink-soft)">The Almanac's whole spirit — patience over prediction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">The part nobody likes</div>
+    <h2 class="reveal">The risks — honestly</h2>
+    <div class="truth reveal">
+      <div class="tag">The hard truth</div>
+      <p><b>Most people who actively trade lose money.</b> It is a competitive arena full of professionals, algorithms and institutions with better data, lower costs and no emotions. Treating it as a fast route to wealth is how savings disappear.</p>
+    </div>
+    <ul class="factors">
+      <li class="reveal"><span class="n">01</span><span class="t"><b>Leverage amplifies losses.</b> Borrowed money can wipe out your stake — and sometimes more than you put in — in a single move.</span></li>
+      <li class="reveal"><span class="n">02</span><span class="t"><b>Emotions sabotage you.</b> Fear, greed, FOMO and "revenge trading" after a loss push people into their worst decisions.</span></li>
+      <li class="reveal"><span class="n">03</span><span class="t"><b>Costs quietly bleed you.</b> Spreads, commissions, overnight fees and slippage take a cut of every trade, win or lose.</span></li>
+      <li class="reveal"><span class="n">04</span><span class="t"><b>The market can stay irrational.</b> Being "right" eventually is no comfort if a move stops you out first.</span></li>
+      <li class="reveal"><span class="n">05</span><span class="t"><b>It demands time and nerves.</b> Active trading is stressful, time-hungry work — not passive income.</span></li>
+      <li class="reveal"><span class="n">06</span><span class="t"><b>Beware the hype.</b> "Signals," courses and gurus promising easy profits are usually selling you something, not edge.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">Real lives, real outcomes</div>
+    <h2 class="reveal">Case studies: who gained, who lost</h2>
+    <p class="reveal">The sharpest lessons come from real stories — and most of them are cautionary. These open live Google searches for true accounts of traders winning and (far more often) losing, plus the research on how the odds actually play out. Read them widely and sceptically before you ever risk real money.</p>
+    <div class="case-grid">
+      <a class="case reveal" href="https://www.google.com/search?q=day+traders+who+lost+everything+stories" target="_blank" rel="noopener">
+        <span class="ct">😬 Traders who lost it all</span>
+        <span class="cd">Cautionary accounts of day traders who blew up their accounts chasing quick gains.</span>
+        <span class="cg">Search on Google ↗</span>
+      </a>
+      <a class="case reveal" href="https://www.google.com/search?q=successful+day+trader+story+how+they+became+profitable" target="_blank" rel="noopener">
+        <span class="ct">🏆 Traders who made it</span>
+        <span class="cd">Stories of people who found success — notice how much time, study and discipline it took.</span>
+        <span class="cg">Search on Google ↗</span>
+      </a>
+      <a class="case reveal" href="https://www.google.com/search?q=what+percentage+of+day+traders+are+profitable+study" target="_blank" rel="noopener">
+        <span class="ct">📊 What the research says</span>
+        <span class="cd">Academic studies on how many day traders actually make money over the long run.</span>
+        <span class="cg">Search on Google ↗</span>
+      </a>
+      <a class="case reveal" href="https://www.google.com/search?q=famous+trading+wins+and+blow-ups+history+Archegos+GameStop" target="_blank" rel="noopener">
+        <span class="ct">💥 Famous wins &amp; blow-ups</span>
+        <span class="cd">From legendary trades to billion-dollar collapses like Archegos — the extremes of the game.</span>
+        <span class="cg">Search on Google ↗</span>
+      </a>
+    </div>
+    <p class="reveal" style="margin-top:14px;font-family:'Spline Sans Mono',monospace;font-size:.62rem;color:var(--ink-soft);letter-spacing:.03em">These open Google in a new tab — the Almanac doesn't endorse any result. Read both sides; the losses are the lesson.</p>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="wrap">
+    <div class="sec-tag reveal">Keep learning</div>
+    <h2 class="reveal">Build the vocabulary first</h2>
+    <p class="reveal">The smartest first move isn't to open a trading account — it's to understand the words and ideas until they're second nature. The glossary has the core terms; come back here whenever a chart concept needs a picture.</p>
+    <a class="glink" href="market-almanac.html#glossary">Open the glossary →</a>
+    <div class="backbar"><a href="market-almanac.html">← Back to the Almanac</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains how trading works — it does not recommend it, provide strategies to follow, manage money, or place trades. Trading is high-risk; most active traders lose money.</p>
+    <p>Explore: <a href="companies.html">Companies</a> · <a href="commodities.html">Commodities</a> · <a href="crypto.html">Crypto</a> · <a href="market-almanac.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · NOT FINANCIAL ADVICE · NEVER RISK MONEY YOU CAN'T AFFORD TO LOSE</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Anthropic</b></div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>

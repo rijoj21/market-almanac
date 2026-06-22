@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Dossier — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;
+    --us:#33648f;--eu:#7a5790;--in:#cc7a22;--as:#2f857a;
+    --shadow:rgba(34,29,23,.14);
+    --accent:#33648f;--accent-soft:#dbe6f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 26px}
+
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+
+  /* dossier header */
+  .dossier-head{padding:50px 0 38px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent);padding:6px 13px;border-radius:30px;margin-bottom:20px}
+  .dossier-head h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.03em;margin-bottom:18px}
+  .facts{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fffdf7}
+  .fact{flex:1;min-width:140px;padding:16px 20px;border-right:1px solid var(--line)}
+  .fact:last-child{border-right:none}
+  .fact .k{font-family:'Spline Sans Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:5px}
+  .fact .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;line-height:1.1}
+  @media(max-width:560px){.fact{min-width:50%;border-bottom:1px solid var(--line)}}
+
+  .whatdo{padding:30px 0 0;display:flex;gap:18px;align-items:flex-start}
+  .whatdo .wbar{flex:0 0 auto;width:5px;align-self:stretch;border-radius:3px;background:var(--accent)}
+  .whatdo .wlabel{font-family:'Spline Sans Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-soft);margin-bottom:8px}
+  .whatdo p{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.25rem,2.8vw,1.6rem);line-height:1.35;letter-spacing:-.01em;color:var(--ink);max-width:720px}
+
+  .intro{padding:34px 0 8px}
+  .intro p{color:var(--ink-soft);max-width:680px;font-size:1.1rem}
+  .intro .live-note{font-family:'Spline Sans Mono',monospace;font-size:.66rem;color:var(--rust);letter-spacing:.04em;margin-top:14px;display:flex;align-items:center;gap:8px}
+  .intro .live-note::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rust);box-shadow:0 0 0 3px rgba(181,83,46,.2)}
+
+  /* dossier cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:24px 0 10px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  .dcard{display:flex;flex-direction:column;border:1px solid var(--ink);border-radius:10px;padding:24px 24px 22px;background:#fffdf7;box-shadow:3px 4px 0 var(--shadow);text-decoration:none;color:var(--ink);transition:transform .18s,box-shadow .18s;border-top:6px solid var(--accent)}
+  .dcard:hover{transform:translateY(-4px);box-shadow:5px 8px 0 var(--shadow)}
+  .dcard:hover .go{background:var(--rust);color:#fff}
+  .dcard .ic{font-size:1.5rem;margin-bottom:12px}
+  .dcard .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:6px}
+  .dcard h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:8px}
+  .dcard p{color:var(--ink-soft);font-size:.98rem;margin-bottom:20px;flex:1}
+  .dcard .go{margin-top:auto;align-self:flex-start;font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--ink);border-radius:5px;padding:9px 15px;transition:.16s}
+  .dcard.wide{grid-column:1/-1;border-top-color:var(--gold)}
+
+  .backbar{padding:30px 0 0}
+  .backbar a{font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none}
+  .backbar a:hover{color:var(--rust)}
+
+  .missing{padding:80px 0;text-align:center}
+  .missing h2{font-family:'Fraunces';font-weight:600;font-size:1.8rem;margin-bottom:12px}
+  .missing p{color:var(--ink-soft);margin-bottom:20px}
+  .missing a{color:var(--rust)}
+
+  footer{padding:46px 0 64px;text-align:center;border-top:1px solid var(--line);margin-top:44px}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:560px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:20px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · LINKS OPEN LIVE THIRD-PARTY RESULTS · NOTHING HERE IS A RECOMMENDATION TO BUY</div>
+
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">DOSSIER</span></a>
+    <nav class="top-nav">
+      <a href="companies.html">← Companies</a>
+      <a href="markets.html">The Markets</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap" id="root"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains markets and vocabulary — it does not recommend investments, manage money, or place trades. External links open live results from Google and other third parties.</p>
+    <p>Back to: <a href="companies.html">Companies &amp; charts</a> · <a href="markets.html">The markets</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · CONSULT A REGISTERED ADVISOR BEFORE INVESTING REAL MONEY</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const REG={
+  us:{name:"United States",color:"#33648f",soft:"#dbe6f0",flag:"🇺🇸"},
+  eu:{name:"Europe",color:"#7a5790",soft:"#e9e0f0",flag:"🇪🇺"},
+  in:{name:"India",color:"#cc7a22",soft:"#f4e6d2",flag:"🇮🇳"},
+  as:{name:"Rest of the World",color:"#2f857a",soft:"#d7ebe7",flag:"🌏"}
+};
+
+// brief "what they do" lines (stable descriptions, not time-sensitive figures)
+const DESC={
+  // United States
+  "NVIDIA":"Designs the graphics and AI chips that power gaming, data centres and modern artificial-intelligence systems.",
+  "Alphabet":"Google's parent company — search, advertising, Android, YouTube, Google Cloud and AI research.",
+  "Apple":"Makes the iPhone, Mac, iPad and Apple Watch, plus services like the App Store and iCloud.",
+  "Microsoft":"Behind Windows, Office, the Azure cloud platform and Xbox, and a major investor in AI.",
+  "Amazon":"The world's largest online retailer, and a leader in cloud computing through Amazon Web Services.",
+  "Meta":"Runs Facebook, Instagram, WhatsApp and Messenger, earning mostly from advertising.",
+  "Broadcom":"Designs semiconductors and infrastructure software used across networking and data centres.",
+  "Berkshire Hathaway":"Warren Buffett's holding company, owning insurers, railroads, energy firms and large stock investments.",
+  "Eli Lilly":"A pharmaceutical maker known for diabetes and weight-loss drugs, among other medicines.",
+  "Walmart":"The world's largest retailer by revenue, running supercentres, grocery stores and online shopping.",
+  "JPMorgan Chase":"The largest US bank — consumer banking, credit cards, investment banking and asset management.",
+  "Tesla":"Builds electric cars, batteries and solar products, and develops self-driving technology.",
+  "Visa":"Operates one of the world's largest payment networks, processing card transactions globally.",
+  "Oracle":"Sells database software, business applications and cloud-computing services to companies.",
+  "Mastercard":"Runs a global payments network connecting banks, merchants and cardholders.",
+  "ExxonMobil":"One of the world's largest oil and gas companies, from exploration to refining and chemicals.",
+  "Costco":"A membership warehouse retailer selling bulk goods at low margins.",
+  "Johnson & Johnson":"A healthcare giant making pharmaceuticals and medical devices.",
+  "Home Depot":"The largest US home-improvement retailer, selling tools, materials and DIY supplies.",
+  "Procter & Gamble":"Makes everyday consumer brands across cleaning, grooming, health and beauty.",
+  // Europe
+  "ASML":"The Dutch firm with a near-monopoly on the lithography machines that make advanced computer chips.",
+  "Roche":"A Swiss pharmaceuticals and diagnostics leader, strong in cancer treatments and lab testing.",
+  "LVMH":"The world's largest luxury group, owning Louis Vuitton, Dior, Moët and Hennessy.",
+  "Novo Nordisk":"A Danish drugmaker, the leading maker of insulin and the GLP-1 treatments Ozempic and Wegovy.",
+  "Nestlé":"The world's biggest food and drink company, behind Nescafé, KitKat and Purina.",
+  "SAP":"Germany's enterprise-software leader, making the business systems that run large companies.",
+  "AstraZeneca":"A UK pharmaceutical company spanning cancer, heart and respiratory medicines.",
+  "Novartis":"A Swiss pharmaceutical maker focused on prescription medicines across many diseases.",
+  "Prosus":"A Dutch-listed technology investor holding large stakes in internet and e-commerce firms worldwide.",
+  "Hermès":"A French luxury house famed for leather goods, silk scarves and Birkin handbags.",
+  "L'Oréal":"The world's largest cosmetics and beauty company.",
+  "Siemens":"A German industrial giant in automation, trains, and factory and infrastructure technology.",
+  "Shell":"A British energy major in oil, gas and increasingly lower-carbon energy.",
+  "HSBC":"One of the world's largest banks, UK-headquartered with a strong Asian presence.",
+  "Inditex (Zara)":"The Spanish fast-fashion group behind Zara and other clothing brands.",
+  "Schneider Electric":"A French specialist in energy management and industrial automation.",
+  "TotalEnergies":"A French oil, gas and electricity company expanding into renewables.",
+  "Allianz":"A German insurance and asset-management group, among the world's largest insurers.",
+  "Unilever":"A consumer-goods maker behind brands like Dove, Hellmann's and Knorr.",
+  "BNP Paribas":"One of Europe's largest banks, offering retail, corporate and investment banking.",
+  // India
+  "Reliance Industries":"India's largest company, spanning energy, petrochemicals, Jio telecom and Reliance Retail.",
+  "HDFC Bank":"India's largest private-sector bank, offering retail and corporate banking.",
+  "Bharti Airtel":"A leading Indian telecom operator providing mobile, broadband and digital services.",
+  "State Bank of India":"India's largest bank — government-owned, with a nationwide branch network.",
+  "ICICI Bank":"A major Indian private-sector bank offering a full range of financial services.",
+  "TCS":"Tata Consultancy Services — India's biggest IT-services and consulting firm, serving global clients.",
+  "Hindustan Unilever":"India's largest consumer-goods company, behind many household and personal-care brands.",
+  "LIC":"Life Insurance Corporation of India — the country's largest, state-owned life insurer.",
+  "Bajaj Finance":"A leading Indian non-bank lender for consumer and business finance.",
+  "Larsen & Toubro":"India's biggest engineering and construction conglomerate, building major infrastructure.",
+  "Infosys":"A global IT-services and consulting company, one of India's largest.",
+  "ITC":"An Indian conglomerate spanning cigarettes, packaged foods, hotels and paper.",
+  "HCL Technologies":"A major Indian IT-services and software company.",
+  "Sun Pharma":"India's largest pharmaceutical company, a big maker of generic medicines.",
+  "Kotak Mahindra Bank":"A leading Indian private-sector bank and financial-services group.",
+  "Maruti Suzuki":"India's largest carmaker, a subsidiary of Japan's Suzuki.",
+  "Axis Bank":"One of India's large private-sector banks.",
+  "NTPC":"India's largest power-generation company, majority state-owned.",
+  "Mahindra & Mahindra":"An Indian conglomerate best known for SUVs, tractors and farm equipment.",
+  "Bajaj Finserv":"The Bajaj group's financial-services arm, spanning lending and insurance.",
+  // Asia
+  "Saudi Aramco":"Saudi Arabia's state oil company — the world's largest oil producer.",
+  "TSMC":"Taiwan's chipmaking giant, the world's largest contract manufacturer of advanced semiconductors.",
+  "Tencent":"A Chinese tech leader behind WeChat, video games and digital payments.",
+  "Alibaba":"China's e-commerce and cloud-computing giant.",
+  "Samsung Electronics":"South Korea's electronics leader, making phones, memory chips and displays.",
+  "Agricultural Bank of China":"One of China's 'big four' state-owned commercial banks.",
+  "ICBC":"Industrial and Commercial Bank of China — among the world's largest banks by assets, state-owned.",
+  "CATL":"The world's largest maker of electric-vehicle batteries, based in China.",
+  "Toyota":"Japan's biggest carmaker and one of the world's largest, known for its hybrids.",
+  "Kweichow Moutai":"A Chinese distiller of premium baijiu liquor, a luxury-status brand.",
+  "China Construction Bank":"One of China's 'big four' state-owned commercial banks.",
+  "SK Hynix":"A South Korean memory-chip maker and key supplier of AI memory.",
+  "PetroChina":"One of China's largest state-owned oil and gas producers.",
+  "PDD Holdings":"The Chinese e-commerce group behind Pinduoduo and the global Temu app.",
+  "Keyence":"A Japanese maker of factory sensors and automation equipment.",
+  "Mitsubishi UFJ":"Japan's largest bank and financial group.",
+  "Sony":"A Japanese electronics and entertainment group — PlayStation, cameras, music and films.",
+  "BYD":"A Chinese maker of electric vehicles and batteries, and a major Tesla rival.",
+  "Meituan":"A Chinese super-app for food delivery and local services.",
+  "Hyundai Motor":"South Korea's largest carmaker."
+};
+const P=new URLSearchParams(location.search);
+const name=P.get('name'), ticker=P.get('ticker')||'', sector=P.get('sector')||'',
+      rkey=P.get('region')||'', cap=parseFloat(P.get('cap')||'0');
+const root=document.getElementById('root');
+
+function capStr(b){ if(!b)return '—'; if(b>=1000)return '$'+(b/1000).toFixed(2)+'T (approx)'; return '$'+Math.round(b)+'B (approx)'; }
+const G=(q)=>'https://www.google.com/search?q='+encodeURIComponent(q);
+const GN=(q)=>'https://news.google.com/search?q='+encodeURIComponent(q);
+
+if(!name){
+  root.innerHTML=`<div class="missing"><h2>No company selected</h2>
+    <p>Open a company from the charts to see its dossier.</p>
+    <a href="companies.html">← Back to the companies &amp; charts</a></div>`;
+}else{
+  const reg=REG[rkey]||{name:"Market",color:"#221d17",soft:"#e9e0cd",flag:"🏢"};
+  document.documentElement.style.setProperty('--accent',reg.color);
+  document.documentElement.style.setProperty('--accent-soft',reg.soft);
+  document.title=name+" — Dossier · The Market Almanac";
+
+  const desc = DESC[name] || `One of ${reg.name}'s largest companies, operating in the ${sector||'market'} sector.`;
+
+  const cards=[
+    {ic:"🌱",eyebrow:"Origins",h:"Founder & history",p:"Who started the company, when, and the story of how it grew to this size.",href:G(name+" company founder history when founded")},
+    {ic:"👔",eyebrow:"Leadership today",h:"Current CEO",p:"Who runs the company right now, and the leadership team around them.",href:G("who is the current CEO of "+name)},
+    {ic:"🧭",eyebrow:"Direction",h:"Plans & policies",p:"Current strategy, major products, and the direction management is steering toward.",href:G(name+" company strategy future plans and policies 2026")},
+    {ic:"📰",eyebrow:"What's next",h:"Future news",p:"The latest and upcoming headlines about the company, straight from Google News.",href:GN(name)},
+    {ic:"📈",eyebrow:"The market view",h:"Stock & live analytics",p:"Today's share price, charts and analytics — the live numbers as Google shows them.",href:G(name+" stock price"),wide:true}
+  ];
+  const cardHTML=cards.map(c=>`
+    <a class="dcard${c.wide?' wide':''}" href="${c.href}" target="_blank" rel="noopener">
+      <span class="ic">${c.ic}</span>
+      <span class="eyebrow">${c.eyebrow}</span>
+      <h3>${c.h}</h3>
+      <p>${c.p}</p>
+      <span class="go">Open on Google ↗</span>
+    </a>`).join('');
+
+  root.innerHTML=`
+    <div class="dossier-head">
+      <span class="badge">${reg.flag} ${reg.name}${ticker?' · '+ticker:''}</span>
+      <h1>${name}</h1>
+      <div class="facts">
+        <div class="fact"><div class="k">Market</div><div class="v">${reg.name}</div></div>
+        <div class="fact"><div class="k">Sector</div><div class="v">${sector||'—'}</div></div>
+        <div class="fact"><div class="k">Ticker</div><div class="v">${ticker||'—'}</div></div>
+        <div class="fact"><div class="k">Approx. value</div><div class="v">${capStr(cap)}</div></div>
+      </div>
+    </div>
+    <div class="whatdo">
+      <div class="wbar"></div>
+      <div>
+        <div class="wlabel">What they do</div>
+        <p>${desc}</p>
+      </div>
+    </div>
+    <div class="intro">
+      <p>A research dossier for <b>${name}</b>. Each card below opens a live, always-current search — because founders stay fixed but CEOs, plans and news change constantly, this guide sends you to the latest source rather than a snapshot that would quickly go stale.</p>
+      <div class="live-note">Links open live results in a new tab</div>
+    </div>
+    <div class="cards">${cardHTML}</div>
+    <div class="backbar"><a href="companies.html">← Back to all companies &amp; charts</a></div>`;
+}
+</script>
+
+</body>
+</html>

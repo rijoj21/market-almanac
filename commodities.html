@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Commodities Bench — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;--shadow:rgba(34,29,23,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1100px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover,nav.top-nav a.here{color:var(--rust);border-color:var(--rust)}
+  @media(max-width:780px){nav.top-nav a:not(.back){display:none}}
+
+  .hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:20px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.3rem,6vw,4.4rem);line-height:.98;letter-spacing:-.03em;margin-bottom:20px}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--gold)}
+  .hero .lede{font-size:1.18rem;max-width:660px;color:var(--ink-soft)}
+  .hero .lede strong{color:var(--ink)}
+  .stamp{font-family:'Spline Sans Mono',monospace;font-size:.66rem;color:var(--ink-soft);margin-top:18px;letter-spacing:.04em;border-left:2px solid var(--gold);padding-left:12px;line-height:1.7}
+
+  .explain{padding:40px 0;border-bottom:1px solid var(--line)}
+  .explain h2{font-family:'Fraunces';font-weight:600;font-size:1.5rem;margin-bottom:10px}
+  .explain p{color:var(--ink-soft);max-width:720px;margin-bottom:12px}
+  .explain .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+  @media(max-width:760px){.explain .pillars{grid-template-columns:1fr}}
+  .pillar{border-left:3px solid var(--gold);padding-left:14px}
+  .pillar .pt{font-family:'Fraunces';font-weight:600;font-size:1.05rem;margin-bottom:4px}
+  .pillar .pd{font-size:.92rem;color:var(--ink-soft)}
+
+  .cat{padding:44px 0 10px;border-bottom:1px solid var(--line)}
+  .cat-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+  .cat-head .dot{width:13px;height:13px;border-radius:50%;align-self:center}
+  .cat-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.7rem;letter-spacing:-.01em}
+  .cat .cat-sub{color:var(--ink-soft);margin-bottom:26px;font-size:1.05rem;max-width:640px}
+
+  .com-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:10px}
+  .com-card{border:1px solid var(--ink);border-radius:10px;padding:22px 22px 20px;background:#fffdf7;box-shadow:3px 4px 0 var(--shadow);display:flex;flex-direction:column;border-top:6px solid var(--accent);text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s}
+  .com-card:hover{transform:translateY(-4px);box-shadow:5px 8px 0 var(--shadow)}
+  .com-card:hover .glink{background:var(--ink)}
+  .com-card .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .com-card .nm{display:flex;align-items:center;gap:10px}
+  .com-card .nm .ic{font-size:1.6rem}
+  .com-card .nm h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;letter-spacing:-.01em;line-height:1.05}
+  .com-card .price{text-align:right;flex:0 0 auto}
+  .com-card .price .p{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;color:var(--accent);line-height:1}
+  .com-card .price .u{font-family:'Spline Sans Mono',monospace;font-size:.56rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:3px}
+  .com-card p{color:var(--ink-soft);font-size:.96rem;margin-bottom:16px;flex:1}
+  .com-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:13px}
+  .com-card .etf{font-family:'Spline Sans Mono',monospace;font-size:.62rem;color:var(--ink-soft);letter-spacing:.03em}
+  .com-card .etf b{color:var(--ink)}
+  .com-card .glink{font-family:'Spline Sans Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:#fff;background:var(--accent);padding:8px 12px;border-radius:5px;transition:.16s;white-space:nowrap}
+  .com-card .glink:hover{background:var(--ink)}
+
+  footer{padding:48px 0 64px;text-align:center}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:560px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:20px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · PRICES ARE APPROXIMATE DATED SNAPSHOTS, NOT LIVE DATA · NOTHING HERE IS A RECOMMENDATION TO BUY</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">COMMODITIES</span></a>
+    <nav class="top-nav">
+      <a href="index.html" class="back">← Almanac</a>
+      <a href="markets.html">The Markets</a>
+      <a href="companies.html">Companies &amp; ETFs</a>
+      <a href="commodities.html" class="here">Commodities</a>
+      <a href="crypto.html">Crypto</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Plate IV · The raw materials beneath the markets</div>
+    <h1>Commodities — the<br>stuff the world <em>runs on</em>.</h1>
+    <p class="lede">Stocks are slices of companies. <strong>Commodities are the raw materials themselves</strong> — gold, oil, copper, wheat. Their prices are set by supply and demand, weather, and world events, which makes them a very different market to understand.</p>
+    <div class="stamp" id="stamp">PRICE SNAPSHOT · approximate levels around mid-June 2026<br>COMMODITIES MOVE CONSTANTLY · treat every figure here as a rough marker, then tap "live" for today's price</div>
+  </div>
+</div>
+
+<section class="explain">
+  <div class="wrap">
+    <h2 class="reveal">How commodities differ from stocks</h2>
+    <p class="reveal">When you buy a share, you own part of a business that can grow, earn and pay dividends. A commodity earns nothing — a bar of gold is the same bar in ten years. You're betting purely on its <b>price</b>, driven by how much exists and how much the world wants. That's why many people hold a little as a <b>hedge</b>: commodities often zig when stocks zag.</p>
+    <div class="pillars">
+      <div class="pillar reveal"><div class="pt">Supply &amp; demand</div><div class="pd">A drought, a mine closure or an OPEC decision can move a price overnight.</div></div>
+      <div class="pillar reveal"><div class="pt">No earnings</div><div class="pd">Commodities don't grow or pay you — the only return is a change in price.</div></div>
+      <div class="pillar reveal"><div class="pt">A different rhythm</div><div class="pd">They often rise when shares fall, which is why they're used to diversify.</div></div>
+    </div>
+  </div>
+</section>
+
+<div id="cats"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains how commodity markets work — it does not recommend investments, manage money, or place trades.</p>
+    <p>Explore more: <a href="companies.html">Companies &amp; ETFs</a> · <a href="markets.html">The markets</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · PRICES APPROXIMATE &amp; DATED · CONSULT A REGISTERED ADVISOR BEFORE INVESTING REAL MONEY</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const G=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+const CATS=[
+  {name:"Precious metals",accent:"#c89a3c",
+   sub:"Stores of value the world has trusted for millennia — money before there was money.",
+   items:[
+     {id:"gold",ic:"🥇",name:"Gold",unit:"per troy ounce",price:"≈ $4,200",etf:"GLD · IAU",gq:"gold price",
+      desc:"The classic safe haven. Investors and central banks pile in when currencies wobble or markets fall — which is why it often rises while stocks drop."},
+     {id:"silver",ic:"🥈",name:"Silver",unit:"per troy ounce",price:"≈ $50",etf:"SLV",gq:"silver price",
+      desc:"Part precious metal, part industrial workhorse — used in solar panels and electronics — so it swings harder than gold."},
+     {id:"platinum",ic:"⚪",name:"Platinum",unit:"per troy ounce",price:"≈ $1,700",etf:"PPLT",gq:"platinum price",
+      desc:"Rarer than gold and heavily used in catalytic converters and industry, so its price leans on manufacturing demand."}
+   ]},
+  {name:"Energy",accent:"#46535b",
+   sub:"The fuel of the world economy — and its most geopolitically charged market.",
+   items:[
+     {id:"brent",ic:"🛢️",name:"Brent Crude Oil",unit:"per barrel",price:"≈ $78",etf:"BNO",gq:"Brent crude oil price",
+      desc:"The global benchmark for oil, priced off North Sea crude. Moves on OPEC decisions, wars and world demand."},
+     {id:"wti",ic:"🛢️",name:"WTI Crude Oil",unit:"per barrel",price:"≈ $76",etf:"USO",gq:"WTI crude oil price",
+      desc:"The US benchmark crude. It shadows Brent closely but reflects American supply, pipelines and storage."},
+     {id:"natgas",ic:"🔥",name:"Natural Gas",unit:"per MMBtu",price:"≈ $3.20",etf:"UNG",gq:"natural gas price",
+      desc:"Heats homes and generates electricity; prices swing sharply with weather, storage levels and exports."}
+   ]},
+  {name:"Industrial metals",accent:"#a55a36",
+   sub:"The raw materials of building, wiring and electrifying the modern world.",
+   items:[
+     {id:"copper",ic:"🔌",name:"Copper",unit:"per pound",price:"≈ $5.00",etf:"CPER",gq:"copper price",
+      desc:"Nicknamed 'Dr. Copper' because its price often signals the economy's health — vital for wiring, EVs and the power grid."}
+   ]},
+  {name:"Agriculture",accent:"#5f7a3f",
+   sub:"What the world eats and drinks — markets ruled by weather and harvests.",
+   items:[
+     {id:"wheat",ic:"🌾",name:"Wheat",unit:"per bushel",price:"≈ $5.50",etf:"WEAT",gq:"wheat price",
+      desc:"A global food staple. Prices spike when droughts or conflict strike major growing regions."},
+     {id:"corn",ic:"🌽",name:"Corn",unit:"per bushel",price:"≈ $4.20",etf:"CORN",gq:"corn price",
+      desc:"Food, animal feed and ethanol all at once — highly sensitive to the US harvest and its weather."},
+     {id:"coffee",ic:"☕",name:"Coffee",unit:"per pound",price:"≈ $2.65",etf:"JO",gq:"coffee price",
+      desc:"Arabica beans trade worldwide; prices ride on the weather in Brazil and Vietnam, the biggest growers."}
+   ]}
+];
+
+document.getElementById('cats').innerHTML=CATS.map(c=>`
+  <section class="cat">
+    <div class="wrap">
+      <div class="cat-head reveal"><span class="dot" style="background:${c.accent}"></span><h2>${c.name}</h2></div>
+      <p class="cat-sub reveal">${c.sub}</p>
+      <div class="com-grid">
+        ${c.items.map(it=>`
+          <a class="com-card reveal" href="commodity.html?id=${it.id}" style="--accent:${c.accent}">
+            <div class="row1">
+              <div class="nm"><span class="ic">${it.ic}</span><h3>${it.name}</h3></div>
+              <div class="price"><div class="p">${it.price}</div><div class="u">${it.unit}</div></div>
+            </div>
+            <p>${it.desc}</p>
+            <div class="foot">
+              <span class="etf">Track via <b>${it.etf}</b></span>
+              <span class="glink">View details ↗</span>
+            </div>
+          </a>`).join('')}
+      </div>
+    </div>
+  </section>`).join('');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>

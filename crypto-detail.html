@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Dossier — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;--shadow:rgba(34,29,23,.14);--accent:#5b53a0;--accent-soft:#e4e2f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+
+  .dhead{padding:48px 0 34px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent);padding:6px 13px;border-radius:30px;margin-bottom:18px}
+  .dhead h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.1rem,6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin-bottom:6px;display:flex;align-items:center;gap:14px}
+  .dhead h1 .glyph{color:var(--accent)}
+  .facts{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fffdf7;margin-top:22px}
+  .fact{flex:1;min-width:120px;padding:15px 18px;border-right:1px solid var(--line)}
+  .fact:last-child{border-right:none}
+  .fact .k{font-family:'Spline Sans Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:5px}
+  .fact .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;line-height:1.1}
+  @media(max-width:620px){.fact{min-width:50%;border-bottom:1px solid var(--line)}}
+
+  section{padding:38px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.13em;color:var(--rust);margin-bottom:8px}
+  section h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
+  .brief{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.15rem,2.5vw,1.4rem);line-height:1.45;color:var(--ink);max-width:760px}
+
+  .factors{list-style:none;display:flex;flex-direction:column;gap:0;max-width:760px}
+  .factors li{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .factors li:last-child{border-bottom:none}
+  .factors li .n{font-family:'Spline Sans Mono',monospace;font-size:.72rem;color:var(--accent);padding-top:3px;flex:0 0 auto}
+  .factors li span.t{font-size:1.02rem}
+
+  .volnote{background:#f7e9e2;border-left:3px solid var(--rust);padding:15px 20px;border-radius:0 6px 6px 0;font-size:1rem;margin-top:6px;color:#7a3a22;max-width:760px}
+  .volnote b{color:var(--rust)}
+
+  /* rule of 72 */
+  .r72{background:var(--ink);color:var(--paper);border-radius:10px;overflow:hidden;box-shadow:5px 6px 0 var(--shadow);max-width:760px}
+  .r72-head{padding:24px 28px 0}
+  .r72-head .tag{font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .r72-head h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;margin:8px 0 6px;color:var(--paper)}
+  .r72-head p{color:#bcae97;font-size:.98rem}
+  .r72-body{padding:22px 28px 26px}
+  .r72-body label{display:flex;justify-content:space-between;align-items:baseline;font-family:'Spline Sans Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#bcae97;margin-bottom:12px}
+  .r72-body label .val{color:var(--gold);font-size:1.05rem}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:#4a4439;outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);border:3px solid var(--ink)}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);border:3px solid var(--ink)}
+  .r72-out{margin-top:22px;text-align:center;border-top:1px solid #3a352d;padding-top:20px}
+  .r72-out .small{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:#bcae97}
+  .r72-out .big{font-family:'Fraunces',serif;font-weight:600;font-size:2.4rem;color:var(--gold);line-height:1.1;margin-top:4px}
+  .r72-warn{background:#3a2218;color:#f0d2b8;font-family:'Spline Sans Mono',monospace;font-size:.64rem;line-height:1.6;letter-spacing:.02em;padding:12px 28px}
+  .r72-warn b{color:#f4a86a}
+
+  .glink{display:inline-flex;align-items:center;gap:10px;font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;background:var(--accent);color:#fff;text-decoration:none;padding:15px 26px;border-radius:7px;transition:.18s}
+  .glink:hover{background:var(--ink)}
+  .backbar{padding:26px 0 0}
+  .backbar a{font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none}
+  .backbar a:hover{color:var(--rust)}
+  .missing{padding:80px 0;text-align:center}
+  .missing h2{font-family:'Fraunces';font-weight:600;font-size:1.8rem;margin-bottom:12px}
+  .missing a{color:var(--rust)}
+
+  footer{padding:44px 0 62px;text-align:center;border-top:1px solid var(--line);margin-top:6px}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:580px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:18px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · CRYPTO IS HIGH-RISK &amp; CAN LOSE ALL VALUE · NOTHING HERE IS A FORECAST OR A RECOMMENDATION</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">CRYPTO DOSSIER</span></a>
+    <nav class="top-nav">
+      <a href="crypto.html">← Crypto</a>
+      <a href="commodities.html">Commodities</a>
+      <a href="companies.html">Companies</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap" id="root"></div>
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains what crypto assets are — it does not recommend any of them, predict their prices, manage money, or place trades.</p>
+    <p>Back to: <a href="crypto.html">All crypto</a> · <a href="commodities.html">Commodities</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · PRICES APPROXIMATE &amp; DATED · NEVER INVEST MORE THAN YOU CAN AFFORD TO LOSE</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const COL={found:"#5b53a0",plat:"#2a8a9c",stable:"#3f8a5f",meme:"#b0508a"};
+const C={
+  btc:{name:"Bitcoin",sym:"BTC",glyph:"₿",cat:"Store of value",accent:COL.found,price:"≈ $63,000",
+    founded:"2009",creator:"Satoshi Nakamoto",supply:"Capped · 21 million",
+    brief:"Bitcoin is the original cryptocurrency, launched in 2009 as a peer-to-peer digital cash system that needs no bank or government. Only 21 million coins will ever exist — a built-in scarcity that leads many to treat it as 'digital gold' and a long-term store of value. It is the largest and most recognised crypto, and the asset the rest of the market tends to follow.",
+    factors:["Overall market mood and appetite for risk","Big institutional buying through spot Bitcoin ETFs","Interest rates and the strength of the US dollar","Government regulation and policy on crypto","The four-year 'halving' that cuts the supply of new coins"],
+    vol:"Bitcoin has a history of violent swings — years where it more than doubled, and years where it lost over half its value. So far in 2026 it is down sharply.",
+    gq:"Bitcoin price"},
+  eth:{name:"Ethereum",sym:"ETH",glyph:"Ξ",cat:"Smart-contract platform",accent:COL.found,price:"≈ $1,700",
+    founded:"2015",creator:"Vitalik Buterin & co-founders",supply:"No fixed cap",
+    brief:"Ethereum is a programmable blockchain launched in 2015 that runs 'smart contracts' — code that executes automatically with no middleman. It is the foundation for most decentralised finance, stablecoins and NFTs, and its coin, ether (ETH), pays the network's fees. If Bitcoin is digital money, Ethereum is more like a global, shared computer.",
+    factors:["Activity in DeFi, NFTs and apps built on it","Network upgrades and transaction ('gas') fees","Competition from rivals like Solana","Overall crypto sentiment and Bitcoin's direction","Adoption through Ethereum spot ETFs"],
+    vol:"Ether is highly volatile, with both huge rallies and steep drops. It has actually outperformed Bitcoin across 2026 so far, yet still sits well below past highs.",
+    gq:"Ethereum price"},
+  bnb:{name:"BNB",sym:"BNB",glyph:"🔶",cat:"Exchange token",accent:COL.plat,price:"≈ $610",
+    founded:"2017",creator:"Binance (Changpeng Zhao)",supply:"Capped · reduced by burns",
+    brief:"BNB is the token of Binance, the world's largest crypto exchange, and of its BNB Chain network. It is used to pay trading fees at a discount and to power apps on the chain. Its fortunes are closely tied to the health and reputation of the Binance ecosystem.",
+    factors:["The health, volume and legal standing of Binance","Regular token 'burns' that shrink supply over time","Activity on BNB Chain","Regulation aimed at crypto exchanges","Overall market sentiment"],
+    vol:"Like most coins, BNB swings widely and is especially sensitive to news about Binance itself.",
+    gq:"BNB coin price"},
+  sol:{name:"Solana",sym:"SOL",glyph:"🟣",cat:"Smart-contract platform",accent:COL.plat,price:"≈ $70",
+    founded:"2020",creator:"Anatoly Yakovenko",supply:"No hard cap · declining issuance",
+    brief:"Solana is a high-speed blockchain launched in 2020, built to handle thousands of transactions per second at very low cost. It is often pitched as an 'Ethereum competitor' and is popular for trading, NFTs and consumer apps. Its main trade-off has been occasional network outages under heavy load.",
+    factors:["Adoption by apps, traders and NFT projects","Network reliability and history of outages","Competition with Ethereum and other platforms","New products like staked Solana ETFs","Overall sentiment and Bitcoin's lead"],
+    vol:"Solana is one of the more volatile majors, with spectacular rallies and equally sharp falls.",
+    gq:"Solana price"},
+  xrp:{name:"XRP",sym:"XRP",glyph:"💧",cat:"Payments",accent:COL.plat,price:"≈ $1.13",
+    founded:"2012",creator:"Ripple (Larsen, McCaleb, Britto)",supply:"100 billion · pre-created",
+    brief:"XRP is the digital asset of the XRP Ledger, launched in 2012 and promoted by the company Ripple for fast, cheap cross-border payments. Unlike mined coins, all 100 billion XRP were created at the start. Its price has long been tied to Ripple's legal and regulatory battles in the United States.",
+    factors:["Legal and regulatory developments (e.g. the SEC case)","Adoption by banks and payment firms","Approval of XRP ETFs in various markets","Bitcoin's direction and overall sentiment","Releases of XRP from Ripple's own holdings"],
+    vol:"XRP is highly volatile and has historically made sudden, large moves around legal news.",
+    gq:"XRP crypto price"},
+  ada:{name:"Cardano",sym:"ADA",glyph:"🔵",cat:"Smart-contract platform",accent:COL.plat,price:"≈ $0.45",
+    founded:"2017",creator:"Charles Hoskinson",supply:"Capped · 45 billion",
+    brief:"Cardano is a smart-contract blockchain launched in 2017, known for its deliberate, research-and-peer-review-driven style of development. Its coin, ADA, is used for fees, staking and governance. Supporters praise its rigor; critics say it has been slow to attract apps and users.",
+    factors:["Developer activity and apps launching on it","Upgrades delivered on its roadmap","Competition from faster-growing platforms","Overall crypto sentiment","Staking participation"],
+    vol:"ADA is volatile and currently trades far below its past peaks.",
+    gq:"Cardano ADA price"},
+  avax:{name:"Avalanche",sym:"AVAX",glyph:"🔺",cat:"Smart-contract platform",accent:COL.plat,price:"≈ $18",
+    founded:"2020",creator:"Ava Labs (Emin Gün Sirer)",supply:"Capped · 720 million",
+    brief:"Avalanche is a fast smart-contract platform launched in 2020 that lets organisations spin up their own custom blockchains, called 'subnets'. Its coin, AVAX, secures the network and pays fees. It competes with Ethereum and Solana for developers and apps.",
+    factors:["Adoption of its subnets by projects and enterprises","Developer and app activity","Competition among Layer 1 platforms","Token unlock schedules","Overall market sentiment"],
+    vol:"AVAX is highly volatile and sits well below its earlier highs.",
+    gq:"Avalanche AVAX price"},
+  trx:{name:"Tron",sym:"TRX",glyph:"⚡",cat:"Content / platform",accent:COL.plat,price:"≈ $0.32",
+    founded:"2017",creator:"Justin Sun",supply:"No fixed cap",
+    brief:"Tron is a blockchain founded in 2017 by Justin Sun, originally aimed at content sharing and entertainment. In practice it has become one of the main rails for moving stablecoins, carrying a large share of global USDT transfers. Its coin, TRX, pays for using the network.",
+    factors:["Volume of stablecoin transfers on the network","Announcements and decisions from founder Justin Sun","Regulatory scrutiny","Overall crypto sentiment","Staking and network usage"],
+    vol:"TRX is volatile, though its heavy stablecoin usage gives it steadier underlying demand than many coins.",
+    gq:"Tron TRX price"},
+  usdt:{name:"Tether",sym:"USDT",glyph:"💵",cat:"Stablecoin",accent:COL.stable,price:"≈ $1.00",
+    founded:"2014",creator:"Tether Limited",supply:"Backed by reserves · grows with demand",
+    brief:"Tether (USDT) is a 'stablecoin' designed to stay worth one US dollar, backed by reserves the company holds. It is the most-traded crypto in the world, used as a digital dollar to move money between coins and exchanges. Its key question is whether it can always hold its $1 peg and stay fully backed.",
+    factors:["Confidence that it is fully backed by real reserves","Whether it holds the $1 peg under stress","Regulation of stablecoins","Demand for a 'digital dollar' across crypto","Transparency of its reserve reports"],
+    vol:"A stablecoin is meant NOT to move — what to watch is the rare moment a peg slips below $1, which signals stress in the system.",
+    gq:"Tether USDT price"},
+  usdc:{name:"USD Coin",sym:"USDC",glyph:"💲",cat:"Stablecoin",accent:COL.stable,price:"≈ $1.00",
+    founded:"2018",creator:"Circle & Coinbase",supply:"Backed by reserves",
+    brief:"USD Coin (USDC) is a dollar-pegged stablecoin launched in 2018 by Circle, designed to always be worth one dollar. It is known for a more regulated, transparent approach to its reserves. It is widely used in trading, payments and DeFi as a digital dollar.",
+    factors:["Trust in Circle's regulated, audited reserves","Whether it holds the $1 peg","Stablecoin regulation","Demand for dollars across crypto and DeFi","The banks that hold the reserves behind it"],
+    vol:"Like other stablecoins, USDC aims to stay at $1; the risk to watch is a brief 'depeg' during banking or market stress.",
+    gq:"USD Coin USDC price"},
+  doge:{name:"Dogecoin",sym:"DOGE",glyph:"🐕",cat:"Meme coin",accent:COL.meme,price:"≈ $0.13",
+    founded:"2013",creator:"Billy Markus & Jackson Palmer",supply:"No cap · ~5 billion added a year",
+    brief:"Dogecoin began in 2013 as a joke based on the 'Doge' Shiba Inu meme, never intended as a serious investment. It has no supply limit and is driven largely by online community enthusiasm and celebrity attention. It is a textbook example of a highly speculative, sentiment-driven coin.",
+    factors:["Social-media hype and celebrity mentions","Overall crypto sentiment","Its unlimited, ever-growing supply","Acceptance by merchants for payments","Bitcoin's direction"],
+    vol:"Dogecoin is extremely volatile and sentiment-driven — it has soared and crashed on little more than online buzz.",
+    gq:"Dogecoin price"}
+};
+
+const id=new URLSearchParams(location.search).get('id');
+const root=document.getElementById('root');
+const G=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+
+if(!id||!C[id]){
+  root.innerHTML=`<div class="missing"><h2>No coin selected</h2>
+    <p style="color:var(--ink-soft);margin-bottom:18px">Open a coin from the crypto page to see its dossier.</p>
+    <a href="crypto.html">← Back to all crypto</a></div>`;
+}else{
+  const c=C[id];
+  document.documentElement.style.setProperty('--accent',c.accent);
+  document.title=c.name+" — Crypto Dossier · The Market Almanac";
+  root.innerHTML=`
+    <div class="dhead">
+      <span class="badge">${c.cat} · ${c.sym}</span>
+      <h1><span class="glyph">${c.glyph}</span>${c.name}</h1>
+      <div class="facts">
+        <div class="fact"><div class="k">Founded</div><div class="v">${c.founded}</div></div>
+        <div class="fact"><div class="k">Created by</div><div class="v">${c.creator}</div></div>
+        <div class="fact"><div class="k">Supply</div><div class="v">${c.supply}</div></div>
+        <div class="fact"><div class="k">Approx. price</div><div class="v">${c.price}</div></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="sec-tag">In brief</div>
+      <p class="brief">${c.brief}</p>
+    </section>
+
+    <section>
+      <div class="sec-tag">The market</div>
+      <h2>What moves its price</h2>
+      <ul class="factors">${c.factors.map((f,i)=>`<li><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${f}</span></li>`).join('')}</ul>
+      <div class="volnote"><b>How it has behaved:</b> ${c.vol}</div>
+    </section>
+
+    <section>
+      <div class="sec-tag">Doubling time</div>
+      <h2>How long to double? The Rule of 72</h2>
+      <p style="color:var(--ink-soft);max-width:760px;margin-bottom:20px">There's a handy shortcut called the <b>Rule of 72</b>: divide 72 by an annual growth rate to estimate how many years something takes to double. Slide a hypothetical rate below to see it in action — but read the warning. Crypto does <b>not</b> grow at a steady rate; it lurches up and down and can fall as fast as it rises.</p>
+      <div class="r72">
+        <div class="r72-head">
+          <div class="tag">Interactive · the maths of doubling</div>
+          <h3>Try a hypothetical growth rate</h3>
+          <p>This shows the arithmetic of doubling time — it is not a prediction that ${c.name} will grow at any rate.</p>
+        </div>
+        <div class="r72-body">
+          <label>Hypothetical growth per year <span class="val" id="rateV">36%</span></label>
+          <input type="range" id="rate" min="4" max="200" step="2" value="36">
+          <div class="r72-out">
+            <div class="small">At that steady rate, doubling would take about</div>
+            <div class="big" id="dbl">2 years</div>
+          </div>
+        </div>
+        <div class="r72-warn"><b>NOT A FORECAST:</b> nobody can say if or when ${c.name} will double — it could just as easily halve. This tool only teaches the doubling-time concept. <b>Never invest money you can't afford to lose.</b></div>
+      </div>
+    </section>
+
+    <section style="border-bottom:none">
+      <div class="sec-tag">Live view</div>
+      <h2>See it live on Google</h2>
+      <p style="color:var(--ink-soft);max-width:760px;margin-bottom:18px">Open Google for ${c.name}'s current price, charts and latest news.</p>
+      <a class="glink" href="${G(c.gq)}" target="_blank" rel="noopener">Open ${c.name} on Google ↗</a>
+      <div class="backbar"><a href="crypto.html">← Back to all cryptocurrencies</a></div>
+    </section>`;
+
+  const rate=document.getElementById('rate'),rateV=document.getElementById('rateV'),dbl=document.getElementById('dbl');
+  function upd(){
+    const r=+rate.value; rateV.textContent=r+'%';
+    const yrs=72/r;
+    dbl.textContent = yrs>=1 ? (yrs>=10?Math.round(yrs):yrs.toFixed(1))+' years'
+                             : Math.round(yrs*12)+' months';
+  }
+  rate.addEventListener('input',upd); upd();
+}
+</script>
+
+</body>
+</html>

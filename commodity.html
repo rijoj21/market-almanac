@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commodity Dossier — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;--shadow:rgba(34,29,23,.14);--accent:#c89a3c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+
+  .dhead{padding:48px 0 30px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent);padding:6px 13px;border-radius:30px;margin-bottom:18px}
+  .dhead h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.1rem,6vw,3.7rem);line-height:1;letter-spacing:-.03em;margin-bottom:6px;display:flex;align-items:center;gap:14px}
+  .dhead h1 .ic{font-size:2.6rem;line-height:1}
+  .facts{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fffdf7;margin-top:22px}
+  .fact{flex:1;min-width:130px;padding:15px 18px;border-right:1px solid var(--line)}
+  .fact:last-child{border-right:none}
+  .fact .k{font-family:'Spline Sans Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:5px}
+  .fact .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;line-height:1.1}
+  @media(max-width:620px){.fact{min-width:50%;border-bottom:1px solid var(--line)}}
+
+  section{padding:38px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.13em;color:var(--rust);margin-bottom:8px}
+  section h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
+  .brief{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.15rem,2.5vw,1.4rem);line-height:1.45;color:var(--ink);max-width:760px}
+
+  .pie-wrap{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:flex-start;margin-top:8px}
+  @media(max-width:720px){.pie-wrap{grid-template-columns:1fr}}
+  .pie-stage{position:sticky;top:96px}
+  .pie-stage svg{width:100%;height:auto;display:block;filter:drop-shadow(2px 4px 0 var(--shadow))}
+  .pie-stage .ctr{text-align:center;margin-top:14px}
+  .pie-stage .ctr .lbl{font-family:'Spline Sans Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft)}
+  .pie-stage .ctr .val{font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;line-height:1.1;color:var(--ink);margin-top:3px}
+  .slice{transition:transform .35s cubic-bezier(.3,.1,.2,1),opacity .25s;transform-origin:175px 175px;cursor:pointer}
+  .slice.dim{opacity:.32}
+  .slice.up{transform:scale(1.05)}
+
+  .slice-list{display:flex;flex-direction:column;gap:14px}
+  .srow{display:flex;align-items:flex-start;gap:14px;padding:18px 18px;border:1px solid var(--line);border-radius:9px;background:#fffdf7;transition:background .25s,border-color .25s,box-shadow .25s,transform .25s;cursor:pointer}
+  .srow:hover{border-color:var(--ink)}
+  .srow.active{background:var(--paper-deep);border-color:var(--accent);box-shadow:3px 4px 0 var(--shadow);transform:translateX(2px)}
+  .srow .swatch{flex:0 0 auto;width:14px;height:54px;border-radius:3px;margin-top:2px}
+  .srow .body{flex:1;min-width:0}
+  .srow .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+  .srow h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:-.01em;line-height:1.05}
+  .srow .pct{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;color:var(--accent);line-height:1}
+  .srow .note{font-size:.96rem;color:var(--ink-soft);line-height:1.45}
+  .pie-foot{font-family:'Spline Sans Mono',monospace;font-size:.62rem;color:var(--ink-soft);letter-spacing:.03em;margin-top:14px;line-height:1.7}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+  .feat{border:1px solid var(--line);border-radius:9px;background:#fffdf7;padding:18px 20px;border-top:5px solid var(--accent);box-shadow:2px 3px 0 var(--shadow)}
+  .feat .ic{font-size:1.4rem;line-height:1;margin-bottom:8px}
+  .feat .k{font-family:'Spline Sans Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:5px}
+  .feat .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;line-height:1.15;color:var(--ink);margin-bottom:8px}
+  .feat .d{font-size:.92rem;color:var(--ink-soft)}
+
+  .factors{list-style:none;display:flex;flex-direction:column;max-width:760px}
+  .factors li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .factors li:last-child{border-bottom:none}
+  .factors li .n{font-family:'Spline Sans Mono',monospace;font-size:.72rem;color:var(--accent);padding-top:3px;flex:0 0 auto}
+  .factors li .t{font-size:1.02rem}
+
+  .glink{display:inline-flex;align-items:center;gap:10px;font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;background:var(--accent);color:#fff;text-decoration:none;padding:15px 26px;border-radius:7px;transition:.18s}
+  .glink:hover{background:var(--ink)}
+  .backbar{padding:26px 0 0}
+  .backbar a{font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none}
+  .backbar a:hover{color:var(--rust)}
+  .missing{padding:80px 0;text-align:center}
+  .missing h2{font-family:'Fraunces';font-weight:600;font-size:1.8rem;margin-bottom:12px}
+  .missing a{color:var(--rust)}
+
+  footer{padding:44px 0 62px;text-align:center;border-top:1px solid var(--line);margin-top:6px}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:580px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:18px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.slice{transition:none}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · FIGURES ARE APPROXIMATE DATED SNAPSHOTS · NOTHING HERE IS A RECOMMENDATION TO BUY</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">COMMODITY DOSSIER</span></a>
+    <nav class="top-nav">
+      <a href="commodities.html">← Commodities</a>
+      <a href="companies.html">Companies</a>
+      <a href="crypto.html">Crypto</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap" id="root"></div>
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains commodity markets — it does not recommend any of them, manage money, or place trades.</p>
+    <p>Back to: <a href="commodities.html">All commodities</a> · <a href="companies.html">Companies</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · FIGURES APPROXIMATE &amp; DATED · CONSULT A REGISTERED ADVISOR BEFORE INVESTING REAL MONEY</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const P={us:"#33648f",uk:"#a6404c",eu:"#7a5790",in:"#cc7a22",cn:"#c44d3a",ru:"#7c8b3e",
+  au:"#b07f3d",ca:"#3f6b6f",sa:"#5f8a3f",br:"#558a4d",za:"#a16b2e",vn:"#3a8a78",co:"#a05a3f",
+  cl:"#5a5a8a",pe:"#7a5e3a",id:"#7a8a3a",fr:"#b35a55",me:"#8a5a3a",other:"#9a8a72"};
+
+const COM={
+  gold:{name:"Gold",ic:"🥇",accent:"#c89a3c",unit:"per troy ounce",price:"≈ $4,200",
+    cat:"Precious metals",etf:"GLD · IAU",gq:"gold price",
+    brief:"Gold is the world's oldest store of value — a soft, dense metal that doesn't tarnish, can't be printed, and has been used as money for thousands of years. Today it lives a double life: half of it ends up as jewellery, while investors and central banks treat it as a safe haven when currencies wobble or markets fall. That's why its price often rises while stocks drop.",
+    distLabel:"Share of world gold mine output",
+    dist:[
+      {k:"China",pct:11,c:P.cn,note:"The world's largest gold producer for over a decade. Major mining provinces are Shandong, Henan and Jiangxi. China is also one of the biggest consumers of gold."},
+      {k:"Russia",pct:10,c:P.ru,note:"Second-largest producer despite sanctions, with vast reserves in Siberia and the Far East. Domestic demand has surged as a hedge against the rouble."},
+      {k:"Australia",pct:9,c:P.au,note:"Most output comes from Western Australia's resource-rich belts. Stable policy and mature mining make it a long-standing top producer."},
+      {k:"Canada",pct:5,c:P.ca,note:"Reserves spread across Ontario, Quebec and Nunavut. A reliable, lower-political-risk source for global supply."},
+      {k:"United States",pct:5,c:P.us,note:"Nevada's Carlin Trend is the heart of US gold mining, with rising output from Alaska."},
+      {k:"Ghana, South Africa & Mali",pct:14,c:P.za,note:"Africa as a whole produces about a fifth of the world's gold; Ghana now leads the continent, having surpassed South Africa."},
+      {k:"Rest of the world",pct:46,c:P.other,note:"Peru, Uzbekistan, Indonesia, Mexico and many others. Production is unusually spread out — no single country dominates."}
+    ],
+    features:[
+      {ic:"⚖️",k:"Type",v:"Precious metal",d:"A dense, malleable metal that doesn't corrode."},
+      {ic:"🏛️",k:"Held by",v:"Central banks",d:"Among the largest buyers — a reserve asset for nations."},
+      {ic:"💍",k:"Biggest use",v:"≈45% jewellery",d:"Plus ~19% bars, ~21% central banks, ~6% electronics."},
+      {ic:"🛡️",k:"Role",v:"Safe haven",d:"Investors flock to gold when markets or currencies fall."}
+    ],
+    factors:["Inflation and the strength of the US dollar","Central-bank buying and selling","Geopolitical tensions and uncertainty","Real interest rates (when rates fall, gold tends to rise)","Jewellery demand, especially from India and China"]
+  },
+  silver:{name:"Silver",ic:"🥈",accent:"#9aa0a8",unit:"per troy ounce",price:"≈ $50",
+    cat:"Precious metals",etf:"SLV",gq:"silver price",
+    brief:"Silver is gold's noisier cousin — a precious metal, but also a vital industrial one. It conducts electricity better than any other metal, which makes it essential in solar panels, electronics and electric vehicles. Because demand comes from both investors and factories, its price swings harder than gold's.",
+    distLabel:"Share of world silver mine output",
+    dist:[
+      {k:"Mexico",pct:22,c:P.me,note:"The world's largest silver producer for centuries — much of it from massive mines in Zacatecas and Chihuahua."},
+      {k:"China",pct:14,c:P.cn,note:"A major producer, often as a by-product of lead, zinc and copper mining."},
+      {k:"Peru",pct:13,c:P.pe,note:"Long a top silver nation, with output from huge polymetallic mines in the Andes."},
+      {k:"Chile",pct:7,c:P.cl,note:"Silver often comes alongside Chile's vast copper output."},
+      {k:"Russia",pct:6,c:P.ru,note:"Significant by-product producer from base-metal mines."},
+      {k:"Australia",pct:5,c:P.au,note:"A reliable producer, again often as a by-product of zinc and lead."},
+      {k:"Rest of the world",pct:33,c:P.other,note:"Bolivia, the US, Poland, Argentina and others fill in the rest."}
+    ],
+    features:[
+      {ic:"⚡",k:"Standout",v:"Best conductor",d:"Beats copper and gold at conducting electricity."},
+      {ic:"🏭",k:"Biggest use",v:"≈55% industrial",d:"Solar panels, electronics, EVs and brazing."},
+      {ic:"🪙",k:"Also",v:"Coins & jewellery",d:"A more affordable precious-metal store of value."},
+      {ic:"📊",k:"Volatility",v:"High",d:"Smaller, thinner market than gold — swings are bigger."}
+    ],
+    factors:["Solar and EV demand for industrial silver","Investor flows into silver ETFs and coins","Gold's price (silver usually follows, amplified)","By-product supply from copper, lead and zinc mines","Inflation and the strength of the US dollar"]
+  },
+  platinum:{name:"Platinum",ic:"⚪",accent:"#7a8590",unit:"per troy ounce",price:"≈ $1,700",
+    cat:"Precious metals",etf:"PPLT",gq:"platinum price",
+    brief:"Platinum is rarer than gold and almost all of it comes from one country: South Africa. It's prized for jewellery, but its biggest job is unglamorous — sitting inside catalytic converters that clean the exhaust from petrol and diesel cars. Because of that link, its price leans heavily on the auto industry.",
+    distLabel:"Share of world platinum mine output",
+    dist:[
+      {k:"South Africa",pct:72,c:P.za,note:"Home to the Bushveld Complex, the largest platinum deposit on earth. South Africa essentially sets the global supply."},
+      {k:"Russia",pct:11,c:P.ru,note:"Norilsk Nickel produces platinum as a by-product of its massive nickel operations in the Arctic."},
+      {k:"Zimbabwe",pct:8,c:P.za,note:"The Great Dyke holds the world's second-largest platinum reserves."},
+      {k:"Canada & United States",pct:5,c:P.us,note:"Smaller producers, mostly from polymetallic mines."},
+      {k:"Rest of the world",pct:4,c:P.other,note:"Tiny output scattered across other countries."}
+    ],
+    features:[
+      {ic:"🚗",k:"Biggest use",v:"≈40% catalytic converters",d:"Cleans pollution from car exhausts."},
+      {ic:"💍",k:"Also",v:"Jewellery & industry",d:"Plus chemical catalysts and electronics."},
+      {ic:"🇿🇦",k:"Supply",v:"Highly concentrated",d:"One country produces about three-quarters of it."},
+      {ic:"⚡",k:"Future",v:"Hydrogen fuel cells",d:"Used in fuel-cell electrodes — a potential growth use."}
+    ],
+    factors:["Global auto sales, especially diesel vehicles","South African mining strikes and power cuts","The rise of electric vehicles (which don't need catalytic converters)","Hydrogen fuel-cell demand","The price of palladium (a substitute in some uses)"]
+  },
+  brent:{name:"Brent Crude Oil",ic:"🛢️",accent:"#46535b",unit:"per barrel",price:"≈ $78",
+    cat:"Energy",etf:"BNO",gq:"Brent crude oil price",
+    brief:"Brent is the global benchmark for oil — the price quoted on news bulletins around the world. It refers to a light, sweet crude originally pumped from the North Sea, and roughly two-thirds of internationally traded oil is priced against it. When you hear 'oil is up', this is usually the number.",
+    distLabel:"Share of world crude oil production",
+    dist:[
+      {k:"United States",pct:21,c:P.us,note:"The world's largest producer, with most output from the Permian Basin in Texas and New Mexico."},
+      {k:"Saudi Arabia",pct:11,c:P.sa,note:"OPEC's dominant member, and the world's largest oil exporter. Its decisions on output move global prices."},
+      {k:"Russia",pct:11,c:P.ru,note:"A major OPEC+ producer, still pumping near record levels despite sanctions."},
+      {k:"Canada",pct:5,c:P.ca,note:"Mostly heavy oil from Alberta's vast oil sands."},
+      {k:"China",pct:4,c:P.cn,note:"A large producer that nevertheless imports far more oil than it pumps."},
+      {k:"Iraq, Iran, UAE, Kuwait",pct:18,c:P.sa,note:"Four more Persian Gulf producers — together a sizeable chunk of world supply."},
+      {k:"Brazil",pct:4,c:P.br,note:"Rapidly growing, with most output from deep-water offshore fields."},
+      {k:"Rest of the world",pct:26,c:P.other,note:"Norway, Mexico, Nigeria, Kazakhstan and many smaller producers."}
+    ],
+    features:[
+      {ic:"🌍",k:"Use",v:"Global benchmark",d:"Most internationally traded oil is priced against Brent."},
+      {ic:"🛢️",k:"Type",v:"Light & sweet",d:"Easier and cheaper to refine into petrol and diesel."},
+      {ic:"🤝",k:"Set by",v:"OPEC + market",d:"OPEC+ output decisions guide it; market does the rest."},
+      {ic:"⚓",k:"Origin",v:"North Sea",d:"Named after the Brent oil field off Scotland."}
+    ],
+    factors:["OPEC+ decisions on raising or cutting output","Wars, sanctions and shipping-route disruption","Global demand from a strong or weak economy","Currency moves — oil is priced in US dollars","Strategic petroleum reserve releases by big nations"]
+  },
+  wti:{name:"WTI Crude Oil",ic:"🛢️",accent:"#3a4750",unit:"per barrel",price:"≈ $76",
+    cat:"Energy",etf:"USO",gq:"WTI crude oil price",
+    brief:"WTI — West Texas Intermediate — is the US benchmark crude. It shadows Brent closely, but mainly reflects what's happening on American oil shores: drilling activity, pipeline capacity, and storage at Cushing, Oklahoma. It usually trades a few dollars below Brent because it's landlocked.",
+    distLabel:"Share of world crude oil production",
+    dist:[
+      {k:"United States",pct:21,c:P.us,note:"Home of WTI itself — production is dominated by Texas and New Mexico's Permian Basin."},
+      {k:"Saudi Arabia",pct:11,c:P.sa,note:"Indirect influence: when Saudi tightens supply, WTI tends to rise alongside Brent."},
+      {k:"Russia",pct:11,c:P.ru,note:"Another swing producer whose decisions ripple through to US prices."},
+      {k:"Canada",pct:5,c:P.ca,note:"Most Canadian crude flows south into the US, directly affecting WTI."},
+      {k:"China",pct:4,c:P.cn,note:"Major importer; Chinese demand changes ripple back to WTI."},
+      {k:"Iraq, Iran, UAE, Kuwait",pct:18,c:P.sa,note:"Persian Gulf producers shaping global supply."},
+      {k:"Brazil",pct:4,c:P.br,note:"Growing fast from deep-water offshore fields."},
+      {k:"Rest of the world",pct:26,c:P.other,note:"Norway, Mexico, Nigeria and many more."}
+    ],
+    features:[
+      {ic:"🇺🇸",k:"Use",v:"US benchmark",d:"The reference price for North American oil markets."},
+      {ic:"🛢️",k:"Type",v:"Light & sweet",d:"Lighter than Brent, very easy to refine."},
+      {ic:"🏬",k:"Hub",v:"Cushing, Oklahoma",d:"Storage at this hub helps set WTI's price."},
+      {ic:"📉",k:"Quirk",v:"Often below Brent",d:"Landlocked — a few dollars cheaper than Brent typically."}
+    ],
+    factors:["US shale drilling activity and rig counts","Storage levels at Cushing, Oklahoma","OPEC+ moves (ripple in from Brent)","Pipeline capacity and refinery maintenance","Hurricanes in the Gulf of Mexico"]
+  },
+  natgas:{name:"Natural Gas",ic:"🔥",accent:"#9a6638",unit:"per MMBtu",price:"≈ $3.20",
+    cat:"Energy",etf:"UNG",gq:"natural gas price",
+    brief:"Natural gas heats homes, generates electricity and powers factories. It's the cleaner-burning fossil fuel, and exports of it as LNG (liquefied natural gas) have turned it into a truly global market. Its price swings sharply with the weather and with storage levels going into each winter.",
+    distLabel:"Share of world natural gas production",
+    dist:[
+      {k:"United States",pct:26,c:P.us,note:"The world's largest producer, transformed by shale gas. Now a top LNG exporter too."},
+      {k:"Russia",pct:14,c:P.ru,note:"Vast Siberian fields. European sanctions reshaped where its gas flows."},
+      {k:"Iran",pct:7,c:P.sa,note:"Sits on huge South Pars reserves, mostly used at home."},
+      {k:"China",pct:6,c:P.cn,note:"Big producer that still imports significant LNG to fuel growth."},
+      {k:"Canada",pct:5,c:P.ca,note:"Major exporter to its southern neighbour."},
+      {k:"Qatar",pct:5,c:P.sa,note:"Tiny country, huge LNG exporter — a giant in the global gas trade."},
+      {k:"Rest of the world",pct:37,c:P.other,note:"Australia, Norway, Saudi Arabia, Algeria and many more."}
+    ],
+    features:[
+      {ic:"🏠",k:"Biggest use",v:"Heating & power",d:"Heats homes and runs gas-fired power stations."},
+      {ic:"❄️",k:"Driver",v:"Winter weather",d:"A cold snap can spike prices fast."},
+      {ic:"🚢",k:"Trade",v:"LNG",d:"Liquefied for shipping — links once-separate markets."},
+      {ic:"📈",k:"Volatility",v:"Very high",d:"One of the most volatile widely traded commodities."}
+    ],
+    factors:["Winter and summer weather extremes","Storage levels heading into winter","LNG export capacity and demand","Pipeline disruptions and geopolitics","Power-sector switching between gas and coal"]
+  },
+  copper:{name:"Copper",ic:"🔌",accent:"#a55a36",unit:"per pound",price:"≈ $5.00",
+    cat:"Industrial metals",etf:"CPER",gq:"copper price",
+    brief:"Copper is so central to industry that traders nickname it 'Dr Copper' — its price often signals whether the global economy is healthy. It wires every home, powers every motor and is critical to EVs, the power grid and clean energy. Demand is set to rise sharply as the world electrifies.",
+    distLabel:"Share of world copper mine output",
+    dist:[
+      {k:"Chile",pct:23,c:P.cl,note:"The world's largest producer by far. The Escondida mine alone is one of the biggest on earth."},
+      {k:"Peru",pct:11,c:P.pe,note:"Second-largest producer, with huge Andean open-pit mines."},
+      {k:"Democratic Republic of Congo",pct:13,c:P.za,note:"A rising giant, now the world's #3 — and the leader in copper-cobalt mining."},
+      {k:"China",pct:8,c:P.cn,note:"Significant producer; also by far the largest consumer of refined copper."},
+      {k:"United States",pct:5,c:P.us,note:"Major mines in Arizona, Utah and New Mexico."},
+      {k:"Russia",pct:4,c:P.ru,note:"Output mostly from Norilsk Nickel's huge Arctic operations."},
+      {k:"Indonesia",pct:4,c:P.id,note:"Home to the giant Grasberg mine, one of the largest copper-and-gold deposits."},
+      {k:"Rest of the world",pct:32,c:P.other,note:"Australia, Zambia, Mexico, Kazakhstan, Mongolia and many more."}
+    ],
+    features:[
+      {ic:"⚡",k:"Biggest use",v:"Electrical wiring",d:"Almost everything that conducts electricity needs copper."},
+      {ic:"🔋",k:"Future",v:"EVs & grid",d:"An EV uses roughly 4× the copper of a regular car."},
+      {ic:"🩺",k:"Nickname",v:"'Dr Copper'",d:"Its price often diagnoses the global economy's health."},
+      {ic:"♻️",k:"Recycling",v:"≈35% of supply",d:"Highly recyclable — scrap is a big secondary source."}
+    ],
+    factors:["Chinese construction and manufacturing demand","Electrification of transport and the power grid","Mining strikes and political risk in Chile and Peru","The strength of the US dollar","New mine openings and ore-grade declines"]
+  },
+  wheat:{name:"Wheat",ic:"🌾",accent:"#b3923c",unit:"per bushel",price:"≈ $5.50",
+    cat:"Agriculture",etf:"WEAT",gq:"wheat price",
+    brief:"Wheat is the world's most widely grown grain and a global food staple — bread, pasta, noodles and flour all depend on it. Its price is exquisitely sensitive to weather in a few key regions, and to war or export bans that can yank supply off the market overnight.",
+    distLabel:"Share of world wheat production",
+    dist:[
+      {k:"China",pct:18,c:P.cn,note:"The world's largest producer — and largest consumer. Most of it is grown and eaten domestically."},
+      {k:"India",pct:14,c:P.in,note:"Second-largest producer, feeding a huge domestic population. Exports are limited and tightly managed."},
+      {k:"Russia",pct:11,c:P.ru,note:"The world's largest wheat exporter — its harvest moves global prices."},
+      {k:"United States",pct:6,c:P.us,note:"A major exporter, with hard red winter wheat from the Plains and spring wheat further north."},
+      {k:"European Union",pct:18,c:P.eu,note:"France, Germany and Poland lead — the EU is a top exporter when harvests are good."},
+      {k:"Canada",pct:5,c:P.ca,note:"Major exporter, known for high-protein hard red spring wheat."},
+      {k:"Australia",pct:4,c:P.au,note:"Big swings year to year depending on rainfall in Western Australia."},
+      {k:"Rest of the world",pct:24,c:P.other,note:"Ukraine, Pakistan, Turkey, Argentina and many smaller producers."}
+    ],
+    features:[
+      {ic:"🍞",k:"Biggest use",v:"Human food",d:"Bread, pasta, noodles, biscuits — global staple."},
+      {ic:"🐄",k:"Also",v:"Animal feed",d:"Lower-grade wheat feeds livestock."},
+      {ic:"📦",k:"Trade",v:"Heavily exported",d:"A small group of countries supply most of world trade."},
+      {ic:"☁️",k:"Driver",v:"Weather",d:"Drought or floods in any major region move global prices."}
+    ],
+    factors:["Weather in Russia, the US Plains, and Australia","War or export bans in the Black Sea region","Currency moves (a strong US dollar weighs on prices)","Stockpile policies in big buyers like China and Egypt","Energy and fertiliser costs"]
+  },
+  corn:{name:"Corn",ic:"🌽",accent:"#cf9a2b",unit:"per bushel",price:"≈ $4.20",
+    cat:"Agriculture",etf:"CORN",gq:"corn price",
+    brief:"Corn (maize) wears three hats at once: food on the table, feed for animals, and fuel as ethanol blended into petrol. The US alone grows about a third of the world's crop, which is why corn prices are extraordinarily sensitive to the American harvest and its summer weather.",
+    distLabel:"Share of world corn production",
+    dist:[
+      {k:"United States",pct:31,c:P.us,note:"The world's largest producer by far, centred on the Iowa-Illinois 'Corn Belt'."},
+      {k:"China",pct:23,c:P.cn,note:"Massive producer that mostly feeds its own livestock and people."},
+      {k:"Brazil",pct:11,c:P.br,note:"Now the world's biggest exporter, with two harvests a year."},
+      {k:"European Union",pct:5,c:P.eu,note:"Mostly from Romania, France, Hungary and Italy."},
+      {k:"Argentina",pct:4,c:P.br,note:"A heavyweight exporter, vulnerable to droughts in the Pampas."},
+      {k:"India",pct:3,c:P.in,note:"Mostly for animal feed and starch."},
+      {k:"Ukraine",pct:3,c:P.ru,note:"A major Black Sea exporter — output upended by war."},
+      {k:"Rest of the world",pct:20,c:P.other,note:"Mexico, South Africa, Indonesia and many more."}
+    ],
+    features:[
+      {ic:"🐄",k:"Biggest use",v:"Animal feed",d:"Most corn worldwide goes to feed livestock."},
+      {ic:"⛽",k:"In the US",v:"≈40% ethanol",d:"Blended into petrol as biofuel."},
+      {ic:"🌍",k:"Production",v:"US-dominated",d:"American harvest swings move global prices."},
+      {ic:"☀️",k:"Driver",v:"US summer weather",d:"Mid-July heat in the Corn Belt is decisive."}
+    ],
+    factors:["US summer weather, especially July rainfall","US ethanol mandates and gasoline demand","Chinese feed imports","South American harvests (Brazil and Argentina)","Currency moves and shipping bottlenecks"]
+  },
+  coffee:{name:"Coffee",ic:"☕",accent:"#7a4530",unit:"per pound",price:"≈ $2.65",
+    cat:"Agriculture",etf:"JO",gq:"coffee price",
+    brief:"Coffee is the world's most-traded soft commodity and the world's favourite drink after water. Most of what we sip is Arabica beans, grown high in the mountains of a handful of tropical countries. Frost in Brazil or drought in Vietnam can shake the entire global market.",
+    distLabel:"Share of world coffee production",
+    dist:[
+      {k:"Brazil",pct:38,c:P.br,note:"The world's largest producer by a mile — mostly Arabica, with Minas Gerais the heart of growing."},
+      {k:"Vietnam",pct:17,c:P.vn,note:"The world's #1 grower of Robusta beans, the punchier sort used in espresso and instant coffee."},
+      {k:"Colombia",pct:8,c:P.co,note:"Famous for high-altitude, washed Arabica — the benchmark for premium coffee."},
+      {k:"Indonesia",pct:7,c:P.id,note:"A major producer of Robusta plus unique single-origin Arabicas like Sumatra."},
+      {k:"Ethiopia",pct:5,c:P.za,note:"The original home of coffee, growing distinctive Arabicas in the Sidamo and Yirgacheffe regions."},
+      {k:"Honduras, Uganda, Peru",pct:11,c:P.pe,note:"Together a major slice of the world's specialty and bulk supply."},
+      {k:"Rest of the world",pct:14,c:P.other,note:"Mexico, India, Guatemala, Kenya, Nicaragua and many more."}
+    ],
+    features:[
+      {ic:"🌱",k:"Two types",v:"Arabica & Robusta",d:"Arabica is smoother; Robusta is stronger and cheaper."},
+      {ic:"🏔️",k:"Grown at",v:"Altitude",d:"High-grown Arabica is generally the most prized."},
+      {ic:"🇧🇷",k:"Driver",v:"Brazil's weather",d:"Frost or drought in Brazil reshapes the world market."},
+      {ic:"🚢",k:"Trade",v:"Highly traded",d:"Second-most-traded soft commodity after sugar."}
+    ],
+    factors:["Frost and drought in Brazil's coffee belt","Drought in Vietnam (for Robusta supply)","Currency moves — the Brazilian real especially","Shipping costs and container availability","Demand from coffee-loving markets (US, EU, China growing)"]
+  }
+};
+
+const id=new URLSearchParams(location.search).get('id');
+const root=document.getElementById('root');
+const G=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+
+if(!id||!COM[id]){
+  root.innerHTML=`<div class="missing"><h2>No commodity selected</h2>
+    <p style="color:var(--ink-soft);margin-bottom:18px">Open a commodity from the commodities page to see its dossier.</p>
+    <a href="commodities.html">← Back to all commodities</a></div>`;
+}else{
+  const c=COM[id];
+  document.documentElement.style.setProperty('--accent',c.accent);
+  document.title=c.name+" — Commodity Dossier · The Market Almanac";
+
+  // Build SVG pie
+  const cx=175,cy=175,r=145;
+  let theta=-Math.PI/2;
+  const total=c.dist.reduce((a,s)=>a+s.pct,0);
+  const slices=c.dist.map((s,i)=>{
+    const a=s.pct/total*Math.PI*2;
+    const x1=cx+r*Math.cos(theta),y1=cy+r*Math.sin(theta);
+    theta+=a;
+    const x2=cx+r*Math.cos(theta),y2=cy+r*Math.sin(theta);
+    const large=a>Math.PI?1:0;
+    const d=`M${cx} ${cy} L${x1.toFixed(2)} ${y1.toFixed(2)} A${r} ${r} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z`;
+    return `<path class="slice" data-i="${i}" d="${d}" fill="${s.c}" stroke="#fffdf7" stroke-width="2"/>`;
+  }).join('');
+
+  const featHTML=c.features.map(f=>`
+    <div class="feat">
+      <div class="ic">${f.ic}</div>
+      <div class="k">${f.k}</div>
+      <div class="v">${f.v}</div>
+      <div class="d">${f.d}</div>
+    </div>`).join('');
+
+  const rowsHTML=c.dist.map((s,i)=>`
+    <div class="srow" data-i="${i}">
+      <div class="swatch" style="background:${s.c}"></div>
+      <div class="body">
+        <div class="top"><h4>${s.k}</h4><div class="pct">${s.pct}%</div></div>
+        <div class="note">${s.note}</div>
+      </div>
+    </div>`).join('');
+
+  root.innerHTML=`
+    <div class="dhead">
+      <span class="badge">${c.cat} · ${c.unit}</span>
+      <h1><span class="ic">${c.ic}</span>${c.name}</h1>
+      <div class="facts">
+        <div class="fact"><div class="k">Approx. price</div><div class="v">${c.price}</div></div>
+        <div class="fact"><div class="k">Unit</div><div class="v">${c.unit}</div></div>
+        <div class="fact"><div class="k">Tracked via</div><div class="v">${c.etf}</div></div>
+        <div class="fact"><div class="k">Category</div><div class="v">${c.cat}</div></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="sec-tag">In brief</div>
+      <p class="brief">${c.brief}</p>
+    </section>
+
+    <section>
+      <div class="sec-tag">Where it comes from</div>
+      <h2>${c.distLabel}</h2>
+      <div class="pie-wrap">
+        <div class="pie-stage">
+          <svg viewBox="0 0 350 350" id="pie">${slices}</svg>
+          <div class="ctr">
+            <div class="lbl" id="legendLbl">Tap a country to highlight it</div>
+            <div class="val" id="legendVal">${c.dist.length} regions in total</div>
+          </div>
+        </div>
+        <div class="slice-list" id="rows">${rowsHTML}</div>
+      </div>
+      <div class="pie-foot">FIGURES APPROXIMATE · share of recent world output, rounded · production shares shift each year</div>
+    </section>
+
+    <section>
+      <div class="sec-tag">At a glance</div>
+      <h2>Quick facts</h2>
+      <div class="feat-grid">${featHTML}</div>
+    </section>
+
+    <section>
+      <div class="sec-tag">The market</div>
+      <h2>What moves its price</h2>
+      <ul class="factors">${c.factors.map((f,i)=>`<li><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${f}</span></li>`).join('')}</ul>
+    </section>
+
+    <section style="border-bottom:none">
+      <div class="sec-tag">Live view</div>
+      <h2>See it live on Google</h2>
+      <p style="color:var(--ink-soft);max-width:760px;margin-bottom:18px">Open Google for ${c.name}'s current price, charts and latest news.</p>
+      <a class="glink" href="${G(c.gq)}" target="_blank" rel="noopener">Open ${c.name} on Google ↗</a>
+      <div class="backbar"><a href="commodities.html">← Back to all commodities</a></div>
+    </section>`;
+
+  // Interaction: click/tap to SELECT a country (toggle). Hovering no longer highlights.
+  const pie=document.getElementById('pie');
+  const rows=[...document.querySelectorAll('#rows .srow')];
+  const slicesEls=[...pie.querySelectorAll('.slice')];
+  const legendLbl=document.getElementById('legendLbl');
+  const legendVal=document.getElementById('legendVal');
+
+  let locked=null; // index the user has explicitly selected (null = none)
+
+  function apply(i){
+    rows.forEach((r,j)=>r.classList.toggle('active',j===i));
+    slicesEls.forEach((s,j)=>{
+      s.classList.toggle('up',j===i);
+      s.classList.toggle('dim',i!==null&&j!==i);
+    });
+    if(i!==null){
+      legendLbl.textContent=c.dist[i].k;
+      legendVal.textContent=c.dist[i].pct+'% of supply';
+    }else{
+      legendLbl.textContent='Tap a country to highlight it';
+      legendVal.textContent=c.dist.length+' regions in total';
+    }
+  }
+
+  function select(i){
+    locked = (locked===i) ? null : i;   // click the same one again to deselect
+    apply(locked);
+  }
+  rows.forEach((r,i)=>r.addEventListener('click',()=>select(i)));
+  slicesEls.forEach((s,i)=>s.addEventListener('click',()=>select(i)));
+
+  // Ambient scroll highlight stays — but only until the user makes a selection.
+  const io=new IntersectionObserver(entries=>{
+    if(locked!==null) return;            // a manual selection takes priority
+    let best=null,bestRatio=0;
+    entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>bestRatio){bestRatio=e.intersectionRatio;best=+e.target.dataset.i;}});
+    if(best!==null)apply(best);
+  },{root:null,rootMargin:'-40% 0px -40% 0px',threshold:[0,.25,.5,.75,1]});
+  rows.forEach(r=>io.observe(r));
+
+  apply(null);
+}
+</script>
+
+</body>
+</html>

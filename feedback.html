@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23221d17'/%3E%3Cpath d='M6 22 L13 14 L19 18 L26 8' fill='none' stroke='%23c89a3c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Leave Feedback — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;--gold:#c89a3c;--rust:#b5532e;--shadow:rgba(34,29,23,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+  @media(max-width:680px){nav.top-nav a:not(.back){display:none}}
+
+  .hero{padding:50px 0 30px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:18px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.1rem,6vw,3.6rem);line-height:1;letter-spacing:-.03em;margin-bottom:16px}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--gold)}
+  .hero .lede{font-size:1.12rem;max-width:600px;color:var(--ink-soft)}
+
+  .formcard{margin:34px 0 10px;border:1px solid var(--ink);border-radius:12px;background:#fffdf7;box-shadow:4px 5px 0 var(--shadow);padding:30px 28px}
+  form label{display:block;margin-bottom:20px}
+  .lab{font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:7px;display:block}
+  input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:'Newsreader',serif;font-size:1rem;background:var(--paper);color:var(--ink);outline:none;transition:border-color .18s}
+  input[type=text]:focus,textarea:focus{border-color:var(--gold)}
+  textarea{resize:vertical;min-height:120px;line-height:1.55}
+
+  .rate-wrap{margin-bottom:22px}
+  .stars{display:flex;gap:6px;margin-top:4px}
+  .stars button{background:none;border:none;cursor:pointer;font-size:2.1rem;line-height:1;color:var(--line);padding:0;transition:transform .1s,color .15s}
+  .stars button:hover{transform:scale(1.12)}
+  .stars button.on{color:var(--gold)}
+  .rate-text{font-family:'Spline Sans Mono',monospace;font-size:.66rem;letter-spacing:.05em;color:var(--ink-soft);margin-top:6px;display:inline-block}
+  .rate-text.err{color:var(--rust)}
+
+  .submit{width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:9px;padding:15px;font-family:'Spline Sans Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:background .18s;margin-top:4px}
+  .submit:hover{background:var(--rust)}
+  .submit:disabled{opacity:.6;cursor:default}
+  .formnote{font-family:'Spline Sans Mono',monospace;font-size:.6rem;letter-spacing:.03em;color:#8a7f6c;text-align:center;margin-top:16px;line-height:1.7}
+
+  .thanks{display:none;text-align:center;padding:20px 6px}
+  .thanks.on{display:block}
+  .thanks .big{font-size:2.6rem;margin-bottom:10px}
+  .thanks h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;margin-bottom:10px}
+  .thanks p{color:var(--ink-soft);max-width:440px;margin:0 auto 8px}
+  .thanks .rr{font-size:1.6rem;color:var(--gold);margin:8px 0}
+  .thanks a{color:var(--rust);font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none}
+
+  footer{padding:40px 0 60px;text-align:center;border-top:1px solid var(--line);margin-top:30px}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:520px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:16px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · YOUR FEEDBACK HELPS THE ALMANAC GROW</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="market-almanac.html" class="brand">The Market Almanac<span class="mark">FEEDBACK</span></a>
+    <nav class="top-nav">
+      <a href="market-almanac.html" class="back">← Almanac</a>
+      <a href="companies.html">Companies</a>
+      <a href="commodities.html">Commodities</a>
+      <a href="crypto.html">Crypto</a>
+      <a href="trading.html">Trading</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Sign the visitors' book</div>
+    <h1>Leave a <em>field note</em>.</h1>
+    <p class="lede">Found the Almanac useful? Spotted something to fix? Tell us what you think — your name, where you're writing from, a message, and a star rating. It goes straight to the keeper of the guide.</p>
+  </div>
+
+  <div class="formcard" id="card">
+    <form action="https://formsubmit.co/rijojohnson211@gmail.com" method="POST" id="fbForm">
+      <input type="hidden" name="_subject" value="New Market Almanac feedback ★">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="Rating" id="ratingInput">
+
+      <label>
+        <span class="lab">Your name</span>
+        <input type="text" name="Name" required placeholder="e.g. Jane Doe">
+      </label>
+
+      <label>
+        <span class="lab">Country</span>
+        <input type="text" name="Country" required placeholder="e.g. Ireland" list="countries" autocomplete="country-name">
+        <datalist id="countries">
+          <option>India</option><option>Ireland</option><option>United Kingdom</option><option>United States</option>
+          <option>Canada</option><option>Australia</option><option>Germany</option><option>France</option>
+          <option>Spain</option><option>Italy</option><option>Netherlands</option><option>United Arab Emirates</option>
+          <option>Singapore</option><option>Japan</option><option>China</option><option>Brazil</option>
+          <option>South Africa</option><option>Nigeria</option><option>Kenya</option><option>Mexico</option>
+          <option>Saudi Arabia</option><option>Switzerland</option><option>Sweden</option><option>New Zealand</option>
+        </datalist>
+      </label>
+
+      <div class="rate-wrap">
+        <span class="lab">Your rating</span>
+        <div class="stars" id="stars" role="radiogroup" aria-label="Star rating">
+          <button type="button" data-v="1" aria-label="1 star">★</button>
+          <button type="button" data-v="2" aria-label="2 stars">★</button>
+          <button type="button" data-v="3" aria-label="3 stars">★</button>
+          <button type="button" data-v="4" aria-label="4 stars">★</button>
+          <button type="button" data-v="5" aria-label="5 stars">★</button>
+        </div>
+        <span class="rate-text" id="rateText">Tap a star to rate</span>
+      </div>
+
+      <label>
+        <span class="lab">Your message</span>
+        <textarea name="Message" required placeholder="What did you find helpful? What could be better?"></textarea>
+      </label>
+
+      <button type="submit" class="submit" id="submitBtn">Send feedback →</button>
+      <div class="formnote">Your note is emailed privately to the keeper of the Almanac. Nothing is published on the site.</div>
+    </form>
+
+    <div class="thanks" id="thanks">
+      <div class="big">📖</div>
+      <h2>Thank you for your note!</h2>
+      <div class="rr" id="thanksStars"></div>
+      <p>Your feedback has been sent. It genuinely helps shape what the Almanac becomes next.</p>
+      <a href="market-almanac.html">← Back to the Almanac</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide to the language of markets. Built for curiosity, not for trading.</p>
+    <p>Explore: <a href="market-almanac.html">Glossary</a> · <a href="companies.html">Companies</a> · <a href="commodities.html">Commodities</a> · <a href="crypto.html">Crypto</a></p>
+    <div class="fine">FOR LEARNING ONLY · NOT FINANCIAL ADVICE</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Anthropic</b></div>
+</footer>
+
+<script>
+(function(){
+  var stars=[].slice.call(document.querySelectorAll('#stars button')),
+      ratingInput=document.getElementById('ratingInput'),
+      rateText=document.getElementById('rateText'),
+      form=document.getElementById('fbForm'),
+      submitBtn=document.getElementById('submitBtn'),
+      thanks=document.getElementById('thanks'),
+      thanksStars=document.getElementById('thanksStars'),
+      chosen=0;
+  var words={1:'Poor',2:'Fair',3:'Good',4:'Great',5:'Excellent'};
+  function paint(n){stars.forEach(function(s,i){s.classList.toggle('on',i<n);});}
+  function setRating(v){chosen=v;paint(v);rateText.classList.remove('err');
+    rateText.textContent='★'.repeat(v)+' — '+v+' of 5 · '+words[v];
+    ratingInput.value='★'.repeat(v)+'☆'.repeat(5-v)+'  ('+v+' / 5 — '+words[v]+')';}
+  stars.forEach(function(s){
+    s.addEventListener('mouseenter',function(){paint(+s.dataset.v);});
+    s.addEventListener('click',function(){setRating(+s.dataset.v);});
+  });
+  document.getElementById('stars').addEventListener('mouseleave',function(){paint(chosen);});
+
+  form.addEventListener('submit',function(e){
+    if(!chosen){e.preventDefault();rateText.textContent='Please pick a star rating first';rateText.classList.add('err');return;}
+    e.preventDefault();
+    submitBtn.disabled=true;submitBtn.textContent='Sending…';
+    var data=new FormData(form);
+    fetch('https://formsubmit.co/ajax/rijojohnson211@gmail.com',{
+      method:'POST',headers:{'Accept':'application/json'},body:data
+    }).then(function(r){return r.json();}).then(function(){showThanks();})
+    .catch(function(){
+      // Fallback: let the browser post the form normally (works even from a local file)
+      try{form.submit();}catch(err){
+        submitBtn.disabled=false;submitBtn.textContent='Send feedback →';
+        rateText.textContent='Could not send just now — please check your connection.';rateText.classList.add('err');
+      }
+    });
+  });
+  function showThanks(){
+    thanksStars.textContent='★'.repeat(chosen)+'☆'.repeat(5-chosen);
+    form.style.display='none';thanks.classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+})();
+</script>
+
+</body>
+</html>

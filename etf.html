@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF & Index Dossier — The Market Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;--paper-deep:#e9e0cd;--ink:#221d17;--ink-soft:#5a5043;--line:#c8bca2;
+    --gold:#c89a3c;--rust:#b5532e;
+    --us:#33648f;--eu:#7a5790;--in:#cc7a22;--as:#2f857a;
+    --shadow:rgba(34,29,23,.14);--accent:#33648f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--ink)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 26px}
+  .disclaimer-strip{background:var(--ink);color:var(--paper);font-family:'Spline Sans Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-align:center;padding:9px 18px;line-height:1.5}
+  .disclaimer-strip b{color:var(--gold)}
+  header.top{border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;background:var(--paper)}
+  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:13px 26px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.62rem;background:var(--ink);color:var(--paper);padding:3px 6px;border-radius:2px;margin-left:8px;letter-spacing:.05em}
+  nav.top-nav{display:flex;gap:22px;font-family:'Spline Sans Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.11em;align-items:center}
+  nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
+  nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+
+  .dhead{padding:48px 0 34px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent);padding:6px 13px;border-radius:30px;margin-bottom:18px}
+  .dhead h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.1rem,6vw,3.7rem);line-height:1;letter-spacing:-.03em;margin-bottom:14px}
+  .dhead .sub{font-family:'Spline Sans Mono',monospace;font-size:.72rem;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:20px}
+  .dhead .desc{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.15rem,2.6vw,1.45rem);line-height:1.4;max-width:740px;color:var(--ink)}
+
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{font-family:'Spline Sans Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.13em;color:var(--rust);margin-bottom:6px}
+  section h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;letter-spacing:-.01em;margin-bottom:6px}
+  section .lead{color:var(--ink-soft);max-width:680px;margin-bottom:24px;font-size:1.02rem}
+
+  .bars{display:flex;flex-direction:column;gap:8px}
+  .brow{display:grid;grid-template-columns:200px 1fr 56px;gap:12px;align-items:center}
+  .brow .lab{font-weight:600;font-size:.98rem;line-height:1.2}
+  .brow .lab .s{display:block;font-family:'Spline Sans Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)}
+  .brow .track{height:24px;background:var(--paper-deep);border-radius:4px;overflow:hidden}
+  .brow .fill{height:100%;border-radius:4px;background:var(--accent);width:0;transition:width .8s cubic-bezier(.3,.1,.2,1)}
+  .brow .pct{font-family:'Spline Sans Mono',monospace;font-size:.8rem;text-align:right;color:var(--ink)}
+  @media(max-width:600px){.brow{grid-template-columns:130px 1fr 46px;gap:8px}.brow .lab{font-size:.85rem}}
+
+  .glink{display:inline-flex;align-items:center;gap:10px;font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper);text-decoration:none;padding:15px 26px;border-radius:7px;transition:.18s}
+  .glink:hover{background:var(--rust)}
+  .note{background:var(--paper-deep);border-left:3px solid var(--gold);padding:15px 20px;border-radius:0 6px 6px 0;font-size:.98rem;margin-top:6px}
+  .backbar{padding:26px 0 0}
+  .backbar a{font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none}
+  .backbar a:hover{color:var(--rust)}
+  .missing{padding:80px 0;text-align:center}
+  .missing h2{font-family:'Fraunces';font-weight:600;font-size:1.8rem;margin-bottom:12px}
+  .missing a{color:var(--rust)}
+
+  footer{padding:44px 0 62px;text-align:center;border-top:1px solid var(--line);margin-top:6px}
+  footer .fb{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;margin-bottom:12px}
+  footer p{color:var(--ink-soft);font-size:.92rem;max-width:560px;margin:0 auto 8px}
+  footer a{color:var(--rust)}
+  footer .fine{font-family:'Spline Sans Mono',monospace;font-size:.64rem;letter-spacing:.05em;color:var(--line);margin-top:18px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.brow .fill{transition:none}}
+</style>
+</head>
+<body>
+<div class="disclaimer-strip">EDUCATIONAL FIELD GUIDE ONLY · <b>NOT</b> FINANCIAL ADVICE · WEIGHTS ARE APPROXIMATE DATED SNAPSHOTS, NOT LIVE DATA · NOTHING HERE IS A RECOMMENDATION TO BUY</div>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">The Market Almanac<span class="mark">ETF DOSSIER</span></a>
+    <nav class="top-nav">
+      <a href="companies.html">← Companies</a>
+      <a href="markets.html">The Markets</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap" id="root"></div>
+<footer>
+  <div class="wrap">
+    <div class="fb">The Market Almanac</div>
+    <p>An educational field guide. It explains how indices and ETFs are built — it does not recommend investments, manage money, or place trades.</p>
+    <p>Back to: <a href="companies.html">Companies &amp; ETFs</a> · <a href="markets.html">The markets</a> · <a href="index.html">Glossary</a></p>
+    <div class="fine">FOR LEARNING ONLY · WEIGHTS APPROXIMATE · CONSULT A REGISTERED ADVISOR BEFORE INVESTING REAL MONEY</div>
+  </div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+</footer>
+
+<script>
+const COL={us:"#33648f",eu:"#7a5790",uk:"#a6404c",in:"#cc7a22",as:"#2f857a",world:"#4a5d6b",gold:"#c89a3c",chips:"#3b7a8c"};
+/* Approximate, dated snapshots — for learning the SHAPE of each basket, not exact figures. */
+const ETF={
+  sp500:{name:"S&P 500",region:"United States",accent:COL.us,track:"SPY · VOO · IVV",flag:"🇺🇸",
+    desc:"The 500 largest US companies, weighted by size. The most-tracked index on earth and the benchmark most index funds copy.",
+    holdings:[["NVIDIA","Semiconductors",7.2],["Alphabet","Technology",6.4],["Apple","Technology",5.9],["Microsoft","Technology",5.3],["Amazon","Consumer / Tech",4.0],["Broadcom","Semiconductors",2.5],["Meta","Technology",2.5],["Tesla","Auto / Tech",2.3],["Berkshire Hathaway","Financials",1.7],["Eli Lilly","Healthcare",1.6]],
+    sectors:[["Technology",34.5],["Financials",13.4],["Consumer Discretionary",10.6],["Communication",10.5],["Healthcare",9.5],["Industrials",8.0],["Consumer Staples",6.0],["Energy",3.0],["Utilities",2.5],["Materials",2.0],["Real Estate",2.0]],
+    gq:"SPY S&P 500 ETF price"},
+  nasdaq100:{name:"Nasdaq 100",region:"United States",accent:COL.us,track:"QQQ",flag:"🇺🇸",
+    desc:"The 100 biggest non-financial companies on the Nasdaq — overwhelmingly technology. A concentrated bet on big tech.",
+    holdings:[["Apple","Technology",9.0],["Microsoft","Technology",8.2],["NVIDIA","Semiconductors",7.8],["Amazon","Consumer / Tech",5.6],["Broadcom","Semiconductors",5.0],["Meta","Technology",4.6],["Alphabet","Technology",4.8],["Tesla","Auto / Tech",3.0],["Netflix","Communication",2.6],["Costco","Retail",2.2]],
+    sectors:[["Technology",50.0],["Communication",15.0],["Consumer Discretionary",13.0],["Healthcare",6.0],["Consumer Staples",6.0],["Industrials",5.0],["Utilities",1.0],["Energy",0.5]],
+    gq:"QQQ Nasdaq 100 ETF price"},
+  nifty50:{name:"Nifty 50",region:"India",accent:COL.in,track:"NIFTYBEES",flag:"🇮🇳",
+    desc:"India's 50 leading companies on the NSE — dominated by banks and IT, anchored by Reliance. The benchmark for Indian index funds.",
+    holdings:[["HDFC Bank","Banking",13.0],["ICICI Bank","Banking",9.0],["Reliance Industries","Energy / Conglomerate",8.6],["Infosys","IT services",4.9],["Bharti Airtel","Telecom",4.5],["ITC","Consumer",3.6],["Larsen & Toubro","Capital goods",3.6],["TCS","IT services",3.2],["Axis Bank","Banking",3.1],["Kotak Mahindra Bank","Banking",2.95]],
+    sectors:[["Financial Services",35.0],["Oil & Gas",11.0],["Information Technology",11.0],["Automobiles",7.0],["Consumer Goods",6.0],["Telecom",5.0],["Others",25.0]],
+    gq:"Nifty 50 index"},
+  stoxx600:{name:"STOXX Europe 600",region:"Europe",accent:COL.eu,track:"iShares STOXX 600",flag:"🇪🇺",
+    desc:"600 companies across 17 European countries — the broadest single view of European stocks, spread across pharma, industry and finance.",
+    holdings:[["Novo Nordisk","Healthcare",3.0],["ASML","Semiconductors",2.8],["Nestlé","Consumer staples",2.4],["SAP","Technology",2.4],["AstraZeneca","Healthcare",2.2],["Roche","Healthcare",2.0],["LVMH","Luxury",1.9],["Novartis","Healthcare",1.8],["Shell","Energy",1.8],["HSBC","Financials",1.7]],
+    sectors:[["Financials",18.0],["Healthcare",15.0],["Industrials",15.0],["Consumer Discretionary",11.0],["Technology",9.0],["Consumer Staples",9.0],["Energy",5.0],["Materials",5.0],["Utilities",5.0],["Communication",4.0],["Real Estate",1.0]],
+    gq:"STOXX Europe 600 index"},
+  eurostoxx50:{name:"Euro STOXX 50",region:"Europe",accent:COL.eu,track:"iShares Core EURO STOXX 50",flag:"🇪🇺",
+    desc:"50 blue-chip leaders from the Eurozone — the headline index for continental Europe's biggest names.",
+    holdings:[["ASML","Semiconductors",8.0],["SAP","Technology",6.5],["LVMH","Luxury",4.5],["Siemens","Industrials",4.0],["TotalEnergies","Energy",3.5],["Schneider Electric","Industrials",3.4],["Allianz","Insurance",3.2],["L'Oréal","Consumer",3.0],["Sanofi","Healthcare",2.8],["Air Liquide","Materials",2.6]],
+    sectors:[["Technology",17.0],["Industrials",16.0],["Consumer Discretionary",13.0],["Financials",12.0],["Consumer Staples",10.0],["Healthcare",9.0],["Energy",6.0],["Utilities",6.0],["Materials",6.0],["Communication",5.0]],
+    gq:"Euro STOXX 50 index"},
+  ftse100:{name:"FTSE 100",region:"United Kingdom",accent:COL.uk,track:"ISF",flag:"🇬🇧",
+    desc:"The 100 largest companies on the London Stock Exchange — heavy in energy, mining, finance and consumer staples, with mostly global revenues.",
+    holdings:[["AstraZeneca","Healthcare",8.0],["Shell","Energy",7.0],["HSBC","Financials",6.5],["Unilever","Consumer staples",4.5],["BP","Energy",3.5],["GSK","Healthcare",3.2],["Rio Tinto","Materials",3.0],["Diageo","Consumer staples",2.6],["RELX","Information",2.5],["British American Tobacco","Consumer",2.4]],
+    sectors:[["Financials",18.0],["Consumer Staples",15.0],["Energy",12.0],["Healthcare",11.0],["Materials",10.0],["Industrials",10.0],["Consumer Discretionary",9.0],["Communication",5.0],["Utilities",5.0],["Technology",1.0]],
+    gq:"FTSE 100 index"},
+  nikkei225:{name:"Nikkei 225",region:"Japan",accent:COL.as,track:"1321 · EWJ",flag:"🇯🇵",
+    desc:"225 major Japanese companies in a price-weighted Tokyo benchmark, so high-priced shares like chip and retail names carry extra sway.",
+    holdings:[["Fast Retailing","Retail",10.0],["Tokyo Electron","Semiconductors",7.0],["Advantest","Semiconductors",6.0],["SoftBank Group","Technology",5.0],["Toyota","Automotive",2.6],["Sony","Electronics",2.4],["Recruit","Services",2.2],["Shin-Etsu","Materials",2.0],["KDDI","Telecom",1.9],["Daikin","Industrials",1.8]],
+    sectors:[["Technology",23.0],["Industrials",22.0],["Consumer Discretionary",18.0],["Healthcare",9.0],["Consumer Staples",9.0],["Communication",8.0],["Materials",6.0],["Financials",5.0]],
+    gq:"Nikkei 225 index"},
+  hangseng:{name:"Hang Seng",region:"Hong Kong",accent:COL.as,track:"2800 Tracker Fund",flag:"🇭🇰",
+    desc:"Hong Kong's main index — a window into China's biggest tech platforms and state-backed banks.",
+    holdings:[["HSBC","Financials",8.5],["Tencent","Technology",8.0],["Alibaba","E-commerce",7.0],["Meituan","Technology",5.0],["AIA","Insurance",4.5],["China Construction Bank","Banking",4.0],["Xiaomi","Electronics",3.5],["ICBC","Banking",3.0],["Ping An","Insurance",2.8],["BYD","Auto / EV",2.5]],
+    sectors:[["Financials",35.0],["Technology",28.0],["Consumer Discretionary",14.0],["Communication",8.0],["Energy",5.0],["Property",5.0],["Consumer Staples",5.0]],
+    gq:"Hang Seng index"},
+  semis:{name:"Semiconductors",region:"Global · Chips",accent:COL.chips,track:"SOXX · SMH",flag:"💻",
+    desc:"A basket of the companies that design and make the chips behind every phone, computer, car and data centre. Highly concentrated, fast-growing and famously volatile — it rises and falls with the AI and electronics cycle.",
+    holdings:[["NVIDIA","Chip designer",18.0],["TSMC","Foundry",10.0],["Broadcom","Chip designer",8.0],["AMD","Chip designer",5.5],["Qualcomm","Chip designer",4.8],["Texas Instruments","Analog",4.5],["ASML","Equipment",4.3],["Applied Materials","Equipment",4.0],["Micron","Memory",3.8],["Lam Research","Equipment",3.5]],
+    sectors:[["Chip designers (fabless)",46],["Equipment makers",20],["Foundries / manufacturing",16],["Analog & power chips",10],["Memory",8]],
+    gq:"SOXX semiconductor ETF price"},
+  vti:{name:"Vanguard Total US",region:"United States",accent:COL.us,track:"VTI",flag:"🇺🇸",
+    desc:"Vanguard's whole-US-market fund — roughly 3,600 companies, from mega-cap giants down to small caps, in one low-cost basket. Nearly identical to the S&P 500 at the top, but it also captures the smaller end of the market.",
+    holdings:[["Apple","Technology",6.0],["NVIDIA","Semiconductors",5.8],["Microsoft","Technology",5.2],["Amazon","Consumer / Tech",3.5],["Alphabet","Technology",3.3],["Meta","Technology",2.2],["Broadcom","Semiconductors",2.0],["Tesla","Auto / Tech",1.7],["Berkshire Hathaway","Financials",1.5],["Eli Lilly","Healthcare",1.3]],
+    sectors:[["Technology",32.0],["Financials",13.0],["Consumer Discretionary",10.5],["Healthcare",10.5],["Industrials",9.5],["Communication",8.5],["Consumer Staples",5.0],["Energy",3.5],["Real Estate",3.0],["Utilities",2.5],["Materials",2.0]],
+    gq:"VTI Vanguard Total Stock Market ETF price"},
+  vxus:{name:"Vanguard Total International",region:"World ex-US",accent:COL.as,track:"VXUS",flag:"🌏",
+    desc:"Vanguard's 'everything outside the United States' fund — thousands of companies across Europe, Japan, emerging markets and beyond. A common partner to a US fund for one-stop global coverage.",
+    holdings:[["TSMC","Semiconductors",2.4],["Nestlé","Consumer Staples",1.2],["ASML","Semiconductors",1.1],["Tencent","Technology",1.1],["Samsung","Technology",1.0],["Novo Nordisk","Healthcare",0.9],["SAP","Technology",0.9],["Toyota","Auto",0.8],["AstraZeneca","Healthcare",0.8],["Roche","Healthcare",0.7]],
+    sectors:[["Financials",19.0],["Industrials",14.0],["Technology",13.0],["Consumer Discretionary",11.0],["Healthcare",10.0],["Consumer Staples",8.0],["Materials",7.0],["Communication",6.0],["Energy",5.0],["Utilities",4.0],["Real Estate",3.0]],
+    gq:"VXUS Vanguard Total International ETF price"},
+  msciworld:{name:"MSCI World / Total World",region:"Global",accent:COL.world,track:"VT · URTH",flag:"🌍",
+    desc:"Thousands of large and mid-sized companies across the globe in one basket — the closest thing to owning the whole stock market. By value it is about two-thirds United States.",
+    holdings:[["Apple","Technology",4.4],["NVIDIA","Semiconductors",4.3],["Microsoft","Technology",3.6],["Alphabet","Technology",2.8],["Amazon","Consumer / Tech",2.4],["Meta","Technology",1.6],["Broadcom","Semiconductors",1.4],["TSMC","Semiconductors",1.2],["Tesla","Auto / Tech",1.1],["Eli Lilly","Healthcare",1.0]],
+    sectors:[["Technology",26.0],["Financials",16.0],["Industrials",11.0],["Healthcare",10.0],["Consumer Discretionary",10.0],["Communication",8.0],["Consumer Staples",6.0],["Energy",4.0],["Materials",4.0],["Utilities",3.0],["Real Estate",2.0]],
+    gq:"VT Vanguard Total World ETF price"},
+};
+
+const P=new URLSearchParams(location.search);
+const id=P.get('id');
+const root=document.getElementById('root');
+const G=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+
+function barRows(list){
+  const max=Math.max(...list.map(x=>x[x.length-1]));
+  return list.map(x=>{
+    const w=x[x.length-1], label=x[0], sub=x.length>2?x[1]:'';
+    const width=Math.max(2,w/max*100);
+    return `<div class="brow">
+      <div class="lab">${label}${sub?`<span class="s">${sub}</span>`:''}</div>
+      <div class="track"><div class="fill" data-w="${width}"></div></div>
+      <div class="pct">${w}%</div>
+    </div>`;
+  }).join('');
+}
+
+if(!id||!ETF[id]){
+  root.innerHTML=`<div class="missing"><h2>No ETF selected</h2>
+    <p style="color:var(--ink-soft);margin-bottom:18px">Choose an ETF or index from the companies page to see its breakdown.</p>
+    <a href="companies.html">← Back to companies &amp; ETFs</a></div>`;
+}else{
+  const e=ETF[id];
+  document.documentElement.style.setProperty('--accent',e.accent);
+  document.title=e.name+" — ETF Dossier · The Market Almanac";
+  const holdingsTitle = e.commodity ? "What it holds" : "Top holdings";
+  const holdingsLead = e.commodity
+    ? "A gold ETF holds just one thing — real metal:"
+    : "The biggest companies inside the basket, by approximate weight. Buy the fund and you own a slice of every one automatically.";
+  const sectorTitle = e.commodity ? "Industry weightage" : "Weightage by industry";
+  const sectorLead = e.commodity
+    ? "Gold isn't split across industries — it's a single commodity, which is exactly why people use it to balance a stock-heavy portfolio."
+    : "How the basket spreads across sectors. This shape is what you're really buying — and why two index funds can behave very differently.";
+
+  root.innerHTML=`
+    <div class="dhead">
+      <span class="badge">${e.flag} ${e.region}${e.track?' · '+e.track:''}</span>
+      <h1>${e.name}</h1>
+      <div class="sub">${e.commodity?'Commodity ETF':'Index / ETF'} · tracked via ${e.track}</div>
+      <p class="desc">${e.desc}</p>
+    </div>
+
+    <section>
+      <div class="sec-tag">${e.commodity?'Holding':'Holdings'}</div>
+      <h2>${holdingsTitle}</h2>
+      <p class="lead">${holdingsLead}</p>
+      <div class="bars">${barRows(e.holdings)}</div>
+    </section>
+
+    <section>
+      <div class="sec-tag">Sector map</div>
+      <h2>${sectorTitle}</h2>
+      <p class="lead">${sectorLead}</p>
+      <div class="bars">${barRows(e.sectors)}</div>
+      ${e.commodity?'':'<div class="note">Weights are approximate snapshots and shift as prices move and the index rebalances. They teach the basket shape, not an exact figure for today.</div>'}
+    </section>
+
+    <section style="border-bottom:none">
+      <div class="sec-tag">Live view</div>
+      <h2>See it live on Google</h2>
+      <p class="lead">Open Google for the current price, charts and analytics for ${e.name}.</p>
+      <a class="glink" href="${G(e.gq)}" target="_blank" rel="noopener">Open ${e.name} on Google ↗</a>
+      <div class="backbar"><a href="companies.html">← Back to all companies &amp; ETFs</a></div>
+    </section>`;
+
+  requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{f.style.width=f.dataset.w+'%';});});
+}
+</script>
+
+</body>
+</html>
