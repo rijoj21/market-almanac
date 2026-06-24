@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23221d17'/%3E%3Cpath d='M6 22 L13 14 L19 18 L26 8' fill='none' stroke='%23c89a3c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>The Market Almanac — A Field Guide to Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +36,7 @@
   }
   ::selection{background:var(--gold);color:var(--ink)}
 
-  .wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 28px}
 
   /* ---------- header ---------- */
   header.top{
@@ -43,12 +44,15 @@
     position:sticky;top:0;z-index:50;
     background:var(--paper);
   }
-  .top-inner{display:flex;align-items:baseline;justify-content:space-between;padding:14px 28px;max-width:1140px;margin:0 auto;gap:20px}
-  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.35rem;letter-spacing:-.02em;display:flex;align-items:baseline;gap:10px}
-  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.7rem;background:var(--ink);color:var(--paper);padding:3px 7px;border-radius:2px;letter-spacing:.05em;transform:translateY(-2px)}
-  nav.top-nav{display:flex;gap:26px;font-family:'Spline Sans Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}
+  .top-inner{display:flex;align-items:center;justify-content:space-between;padding:17px 28px;max-width:1240px;margin:0 auto;gap:18px}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.7rem,1.7vw,2.05rem);letter-spacing:-.02em;display:flex;align-items:baseline;gap:11px;white-space:nowrap;flex:0 0 auto}
+  .brand .mark{font-family:'Spline Sans Mono',monospace;font-weight:500;font-size:.74rem;background:var(--ink);color:var(--paper);padding:4px 8px;border-radius:2px;letter-spacing:.05em;transform:translateY(-2px)}
+  nav.top-nav{display:flex;align-items:center;gap:15px;font-family:'Spline Sans Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
   nav.top-nav a{color:var(--ink-soft);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:.2s}
   nav.top-nav a:hover{color:var(--rust);border-color:var(--rust)}
+  nav.top-nav a.fb-link{border:1px solid var(--gold);border-bottom:1px solid var(--gold);color:var(--gold);padding:5px 13px;border-radius:30px;text-decoration:none;line-height:1}
+  nav.top-nav a.fb-link:hover{background:var(--gold);color:var(--paper);border-color:var(--gold)}
+  @media(max-width:1080px){nav.top-nav .nav-mid{display:none}}
   @media(max-width:760px){nav.top-nav{display:none}}
   .cur-switch{display:flex;border:1px solid var(--line);border-radius:40px;overflow:hidden;margin-left:6px}
   .cur-switch button{font-family:'Spline Sans Mono',monospace;font-size:.82rem;width:30px;height:26px;border:none;background:transparent;color:var(--ink-soft);cursor:pointer;transition:.15s;border-right:1px solid var(--line)}
@@ -158,6 +162,8 @@
   .mkt-panel.com .mkt-panel-eyebrow{color:var(--gold)}
   .mkt-panel.crypto{border-left-color:#5b53a0}
   .mkt-panel.crypto .mkt-panel-eyebrow{color:#5b53a0}
+  .mkt-panel.trading{border-left-color:#2f6f5f}
+  .mkt-panel.trading .mkt-panel-eyebrow{color:#2f6f5f}
   .mkt-panel:hover{transform:translateY(-3px);box-shadow:7px 9px 0 var(--shadow)}
   .mkt-panel:hover .mkt-panel-arrow{transform:translateX(6px);background:var(--rust)}
   .mkt-panel-text{display:flex;flex-direction:column;gap:6px}
@@ -209,10 +215,12 @@
     <div class="brand">The Market Almanac <span class="mark">EST. 2026</span></div>
     <nav class="top-nav">
       <a href="#glossary">Glossary</a>
-      <a href="#lab">Compounding</a>
-      <a href="#concepts">Field Notes</a>
-      <a href="#quiz">Self-Test</a>
+      <a href="#lab" class="nav-mid">Compounding</a>
+      <a href="#concepts" class="nav-mid">Field Notes</a>
+      <a href="#quiz" class="nav-mid">Self-Test</a>
+      <a href="#trading" class="nav-mid">Trading</a>
       <a href="#markets-teaser">The Markets</a>
+      <a href="feedback.html" class="fb-link">★ Feedback</a>
       <div class="cur-switch" id="curSwitch">
         <button data-c="INR" class="active">₹</button>
         <button data-c="USD">$</button>
@@ -225,7 +233,7 @@
 
 <div class="wrap">
   <div class="hero">
-    <div class="specimen-no">FIELD GUIDE №01<br>TERMS CATALOGUED · 24<br>EDITION · LEARNERS</div>
+    <div class="specimen-no">FIELD GUIDE №01<br>TERMS CATALOGUED · 39<br>EDITION · LEARNERS</div>
     <div class="eyebrow">A naturalist's catalogue of money terms</div>
     <h1>Learn the language<br>of <em>markets</em>,<br>one specimen<br>at a time.</h1>
     <p class="lede">Investing has its own vocabulary — <strong>SIPs, index funds, dividends, drawdowns.</strong> This is a field guide to all of it. No accounts, no trades, no advice. Just clear definitions you can actually keep.</p>
@@ -243,6 +251,8 @@
       <button class="pill" data-f="funds">Funds &amp; SIP</button>
       <button class="pill" data-f="trading">Trading</button>
       <button class="pill" data-f="risk">Risk &amp; Return</button>
+      <button class="pill" data-f="commodities">Commodities</button>
+      <button class="pill" data-f="crypto">Crypto</button>
     </div>
     <div class="grid" id="grid"></div>
   </div>
@@ -313,6 +323,14 @@
         <h3>Risk &amp; Return <span>— the eternal trade</span></h3>
         <p>Higher potential returns almost always come with a higher chance of loss. There is <span class="key">no free lunch</span> — anything promising big gains with zero risk is a story, not an investment. Understanding your own comfort with swings is half the game.</p>
       </div></div>
+      <div class="crow reveal"><div class="ix">E.</div><div>
+        <h3>Commodities <span>— why they zig when stocks zag</span></h3>
+        <p>Gold, oil and wheat aren't businesses — they earn nothing and pay no dividend, so their only return is a change in price. What makes them useful is that they often <span class="key">move on a different rhythm to shares</span>: when markets get scared, money flows into safe havens like gold even as stocks fall. Holding a little is less about growth and more about <span class="key">balance</span>.</p>
+      </div></div>
+      <div class="crow reveal"><div class="ix">F.</div><div>
+        <h3>Crypto &amp; the Rule of 72 <span>— a lesson, not a forecast</span></h3>
+        <p>Crypto is the wildest corner of the markets — prices can <span class="key">double or halve in weeks</span>, and coins can fall to zero. That's why nobody can honestly tell you when something will double. The Rule of 72 (72 ÷ growth rate ≈ years to double) is a neat way to <span class="key">understand doubling time as a concept</span>, but applied to crypto it's a maths lesson, never a prediction. Never invest money you can't afford to lose.</p>
+      </div></div>
     </div>
   </div>
 </section>
@@ -369,6 +387,22 @@
   </div>
 </section>
 
+<!-- TRADING -->
+<section id="trading">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="num">§ 06</span><h2>The Trading Floor</h2></div>
+    <p class="sec-sub reveal">Investing is the slow lane; trading is the fast one — buying and selling over days, hours or seconds to profit from price moves, with candlestick charts and a whole vocabulary of its own. It's also where most beginners lose money, so we treat it as something to <em>understand</em>, never to rush into.</p>
+    <a href="trading.html" class="mkt-panel trading reveal">
+      <div class="mkt-panel-text">
+        <span class="mkt-panel-eyebrow">Step onto the floor →</span>
+        <span class="mkt-panel-title">Learn how trading works</span>
+        <span class="mkt-panel-sub">Candlestick charts · key terms with diagrams · common strategies · and the real risks</span>
+      </div>
+      <span class="mkt-panel-arrow">→</span>
+    </a>
+  </div>
+</section>
+
 <div class="fade-veil" id="fadeVeil"></div>
 
 <footer>
@@ -378,7 +412,7 @@
     <p>It exists to explain words — nothing more. It does not give financial advice, recommend products, manage money, or execute any trades.</p>
     <div class="fine">FOR LEARNING ONLY · ALWAYS CONSULT A QUALIFIED, REGISTERED ADVISOR BEFORE INVESTING REAL MONEY</div>
   </div>
-<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Claude AI</b></div>
+<div style="font-family:'Spline Sans Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8a7f6c;text-align:center;margin-top:14px">✦ Built with the help of <b style="color:#b5532e">Anthropic</b></div>
 </footer>
 
 <script>
@@ -422,8 +456,23 @@ const TERMS=[
   {t:"Market Order",f:"trading",p:"/ˈmär-kət/",d:"An instruction to buy or sell immediately at the best price available right now.",e:"Tap 'buy at market' and it fills instantly at the going rate."},
   {t:"Limit Order",f:"trading",p:"/ˈli-mət/",d:"An order that only executes at your chosen price or better — patience over speed.",e:"Set a limit to buy at {95} and it waits until the price reaches {95}."},
   {t:"Capital Gain",f:"basics",p:"/ˈka-pə-tᵊl/",d:"The profit when you sell an investment for more than you paid.",e:"Buy at {100}, sell at {150} — your capital gain is {50}."},
+  {t:"Market Cap",f:"basics",p:"/ˈmär-kət kap/",d:"A company's or coin's total market value: price per unit times the number of units out there.",e:"A {50} share price across 1,000,000 shares is a market cap of {50000000}."},
   {t:"Cost Averaging",f:"funds",p:"/kȯst/",d:"Investing a fixed sum regularly so you automatically buy more when cheap, less when dear.",e:"{5000} buys 50 units at {100}, but 100 units when the price dips to {50}."},
-  {t:"Asset Allocation",f:"risk",p:"/ˈas-et/",d:"How you divide money among types of investments — the single biggest driver of your results.",e:"A 70/30 split between stocks and bonds is an asset allocation."}
+  {t:"Asset Allocation",f:"risk",p:"/ˈas-et/",d:"How you divide money among types of investments — the single biggest driver of your results.",e:"A 70/30 split between stocks and bonds is an asset allocation."},
+  {t:"Commodity",f:"commodities",p:"/kə-ˈmä-də-tē/",d:"A basic raw material traded in bulk, where one unit is interchangeable with another of the same grade.",e:"One barrel of Brent crude is the same as any other — that sameness is what makes it a commodity."},
+  {t:"Futures",f:"commodities",p:"/ˈfyü-chərz/",d:"A contract to buy or sell something at a fixed price on a set future date. It's how most commodities trade.",e:"A bakery locks in wheat at today's price for delivery in six months, so a bad harvest can't blow its budget."},
+  {t:"Spot Price",f:"commodities",p:"/spät/",d:"The price to buy something for immediate delivery — right here, right now, 'on the spot'.",e:"The spot price of gold is what you'd pay to take a bar home today, versus a futures price months out."},
+  {t:"Hedge",f:"commodities",p:"/hej/",d:"An investment held to offset the risk of another — a kind of financial insurance policy.",e:"An airline buys oil futures, so if fuel prices jump, gains there cushion the higher costs."},
+  {t:"Safe Haven",f:"commodities",p:"/sāf ˈhā-vən/",d:"An asset investors flock to when markets turn scary, expecting it to hold value while others fall.",e:"When stocks tumble, money often flows into gold — a classic safe haven."},
+  {t:"Supply & Demand",f:"commodities",p:"/sə-ˈplī/",d:"The basic tug-of-war that sets a price: scarce-but-wanted pushes it up, plentiful-but-unwanted pulls it down.",e:"A drought shrinks the coffee supply while demand holds steady — so the price climbs."},
+  {t:"Blockchain",f:"crypto",p:"/ˈbläk-chān/",d:"A shared, public digital ledger that records transactions across many computers, with no single owner in charge.",e:"Every Bitcoin payment is written into its blockchain, visible to all and almost impossible to rewrite."},
+  {t:"Cryptocurrency",f:"crypto",p:"/ˈkrip-tō-ˌkər-ən-sē/",d:"Digital money that lives on a blockchain, secured by cryptography rather than issued by a bank or government.",e:"Bitcoin and Ethereum are cryptocurrencies — no central bank prints them."},
+  {t:"Stablecoin",f:"crypto",p:"/ˈstā-bəl-ˌkȯin/",d:"A cryptocurrency designed to hold a steady value, usually pegged one-to-one to a currency like the US dollar.",e:"Traders park money in a dollar stablecoin to step out of volatile coins without leaving crypto."},
+  {t:"Wallet",f:"crypto",p:"/ˈwä-lət/",d:"Software or a device that stores the secret keys controlling your crypto — lose the keys and you lose access.",e:"A hardware wallet keeps your keys offline, away from hackers."},
+  {t:"Halving",f:"crypto",p:"/ˈhav-iŋ/",d:"A scheduled event, roughly every four years, that cuts the reward for creating new Bitcoin in half — slowing new supply.",e:"Each Bitcoin halving means fewer new coins enter the market, tightening supply."},
+  {t:"Rule of 72",f:"crypto",p:"/rül əv ˈsev-ən-tē tü/",d:"A quick shortcut: divide 72 by an annual growth rate to estimate how many years something takes to double.",e:"At a steady 8% a year, money doubles in about 72 ÷ 8 = 9 years. (A concept, never a forecast.)"},
+  {t:"DeFi",f:"crypto",p:"/ˈdē-ˌfī/",d:"Short for 'decentralised finance' — lending, trading and saving services that run on a blockchain through code, with no bank or broker in the middle.",e:"Instead of a bank, a DeFi app lets people lend out their crypto and earn interest automatically."},
+  {t:"Bullion",f:"commodities",p:"/ˈbu̇l-yən/",d:"Precious metal — gold or silver — in its raw investable form of bars and coins, valued purely by weight and purity.",e:"A gold ETF stores its value as bullion locked away in a secured vault."}
 ];
 
 const grid=document.getElementById('grid');
@@ -456,7 +505,7 @@ function render(filter){
     grid.appendChild(c);
   });
 }
-function famLabel(f){return{basics:'Foundations',funds:'Funds & SIP',trading:'Trading',risk:'Risk & Return'}[f];}
+function famLabel(f){return{basics:'Foundations',funds:'Funds & SIP',trading:'Trading',risk:'Risk & Return',commodities:'Commodities',crypto:'Crypto'}[f];}
 render('all');
 document.querySelectorAll('.pill').forEach(p=>{
   p.addEventListener('click',()=>{
