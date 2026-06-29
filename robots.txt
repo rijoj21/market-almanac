@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rijoj21.github.io/market-almanac/sitemap.xml
+Sitemap: https://rijo-johnson.github.io/market-almanac/sitemap.xml
